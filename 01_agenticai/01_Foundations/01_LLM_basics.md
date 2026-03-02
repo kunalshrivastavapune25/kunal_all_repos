@@ -13,11 +13,10 @@ A Large Language Model (LLM) is an AI model trained on massive text data to unde
 ## Important Concepts
 
 ### Parameters
-Weights learned during training.
-More parameters → More capability (usually).
+Weights learned by the model during training (GPT 5 has ~1.7 trillion parameters, Llama 3.2 has 90 billion).
 
-### Context Window
-Maximum number of tokens (input + output) the model can process at once.
+### Context WindowChunk of text (Token count) that an LLM can process at once, including both input and output (GPT 5 has ~4
+lakh, Lllama 3.2 has ~1.28 lakh).
 
 ### Non-Deterministic Nature
 Same question may produce different answers.
@@ -28,8 +27,7 @@ Because output depends on probability.
 ## Using LLMs
 
 ### OpenAI
-Set API key:
-OPENAI_API_KEY="sk-..."
+Set API key: OPENAI_API_KEY="sk-..." in .env file
 
 ### Google Gemini
 GOOGLE_API_KEY="AI-..."
@@ -49,3 +47,4 @@ ollama run llama3.2:latest
 
 OPENAI_API_KEY="sk-..."
 GOOGLE_API_KEY="AI-..."
+
