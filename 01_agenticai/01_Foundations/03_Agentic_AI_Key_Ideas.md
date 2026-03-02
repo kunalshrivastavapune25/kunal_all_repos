@@ -1,36 +1,35 @@
----
-
 # Agentic AI: Key Ideas
 
 | Aspect | Meaning (Short) | Why It Matters |
-|--------|------------|------------|
-Tools and Actions APIs | code, DB, automation | Turns decisions into real outcomes | 
-Memory | Short + long-term context | Continuity and multi-step tasks | 
-RAG | Retrieve facts before answering | Accurate, up-to-date results | 
-Reasoning and Planning | Decompose and plan steps | Solves complex problems reliably | 
-Human-in-the-Loop | Approvals and oversight | Safety and governance | 
-Explainability | Traces and reasoning visibility | Trust and debuggability | 
-Observability | Logs, metrics, traces | Debugging and optimization | 
-MCP | Standard tool/data access | Cross-platform interoperability | 
-Multi-Agent | Specialized agents collaborate | Speed, scale, parallelism | 
-Safety and Guardrails | Policies and validation | Prevents harmful actions | 
-Feedback Loops | Retry and self-correction | Better accuracy | 
-Learning and Adaptation | Update memory/strategy | Personalization and efficiency | 
-Deployment | Pipelines, APIs, containers | Production readiness | APIs, Docker, AWS, CI/CD. | 
+|--------|-----------------|----------------|
+| Tools & Actions (APIs) | Code execution, databases, automation | Turns decisions into real-world outcomes |
+| Memory | Short-term + long-term context | Enables continuity and multi-step tasks |
+| RAG | Retrieve facts before answering | Improves accuracy and keeps responses up-to-date |
+| Reasoning & Planning | Break goals into smaller steps | Solves complex problems reliably |
+| Human-in-the-Loop | Approvals and oversight | Ensures safety and governance |
+| Explainability | Visible reasoning and traces | Builds trust and easier debugging |
+| Observability | Logs, metrics, execution traces | Helps monitor and optimize agents |
+| MCP | Standard tool/data access protocol | Enables cross-platform interoperability |
+| Multi-Agent Systems | Specialized agents collaborating | Improves speed, scale, and parallel work |
+| Safety & Guardrails | Policies, validation checks | Prevents harmful or incorrect actions |
+| Feedback Loops | Retry and self-correction | Improves accuracy over time |
+| Learning & Adaptation | Update memory or strategies | Enables personalization and efficiency |
+| Deployment | APIs, containers, CI/CD pipelines | Makes agents production-ready |
 
 ---
 
 
-# Agentic AI Frameworks/Technologies
-| Level | Tool / Framework | Role  Why it fits here | 
-|--------|------------|------------|
-1 | OpenAI SDK | Base API/SDK | Lowest level – just an SDK to call LLMs, embeddings, etc. We build everything else on top | 
-2 | OpenAI Agents SDK | Structured agent building | More structured agents – adds abstractions for tools,memory, structured responses, making agent creation easier | 
-3 | LangGraph | Workflow + Agent graphs | Lets us compose agents/workflows as state machines/graphs.Good for predictable flows or multi-agent orchestration | 
-4 | CrewAI | Multi-agent orchestration | Specializes in multi-agent “crew” collaboration, roles, and task distribution, built for autonomy | 
-5 | AutoGen | Multi-agent conversationframework | Similar to CrewAI, but focuses heavily on conversational agentto-agent loops (like negotiation, reasoning) | 
-6 | MCP (Model ContextProtocol) | Standard protocol for agenttool clientcommunication | Sits at the top as infrastructure – not an agent frameworkitself, but a protocol that makes all the above interoperable | 
-7 | No Code-Low Code | Create agentic AIapplications without writingcode | Uses drag-and-drop features with a rich set of connectors tocreate powerful applications(Examples: n8n, OpenAI AgentBuilder) | 
+# Agentic AI Frameworks / Technologies
+
+| Level | Tool / Framework | Role | Why It Fits Here |
+|-------|------------------|------|------------------|
+| 1 | OpenAI SDK | Base API layer | Direct access to LLMs, embeddings, and responses |
+| 2 | OpenAI Agents SDK | Structured agent building | Adds abstractions for tools, memory, and structured outputs |
+| 3 | LangGraph | Workflow + agent graphs | Builds state-machine based workflows and orchestration |
+| 4 | CrewAI | Multi-agent orchestration | Role-based agent collaboration with task delegation |
+| 5 | AutoGen | Multi-agent conversation framework | Agent-to-agent conversational reasoning loops |
+| 6 | MCP (Model Context Protocol) | Standard communication protocol | Enables interoperability between tools and agents |
+| 7 | No-Code / Low-Code (n8n, OpenAI Agent Builder) | Visual agent creation | Drag-and-drop agent workflows without coding |
 
 
 
