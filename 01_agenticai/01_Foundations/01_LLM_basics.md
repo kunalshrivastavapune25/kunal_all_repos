@@ -15,7 +15,8 @@ A Large Language Model (LLM) is an AI model trained on massive text data to unde
 ### Parameters
 Weights learned by the model during training (GPT 5 has ~1.7 trillion parameters, Llama 3.2 has 90 billion).
 
-### Context WindowChunk of text (Token count) that an LLM can process at once, including both input and output (GPT 5 has ~4
+### Context Window
+Chunk of text (Token count) that an LLM can process at once, including both input and output (GPT 5 has ~4
 lakh, Lllama 3.2 has ~1.28 lakh).
 
 ### Non-Deterministic Nature
@@ -47,4 +48,5 @@ ollama run llama3.2:latest
 
 OPENAI_API_KEY="sk-..."
 GOOGLE_API_KEY="AI-..."
+
 
