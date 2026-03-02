@@ -1,4 +1,3 @@
-```markdown
 # 🚀 Agentic AI Learning & Production Portfolio
 
 This repository documents my journey in building, experimenting, and deploying Agentic AI systems.
@@ -27,9 +26,6 @@ Unlike simple chatbots, these systems act autonomously to achieve objectives.
 ---
 
 # 📂 Repository Structure
-
-```
-
 agentic-ai-learning/
 │
 ├── 01_Foundations/
@@ -38,7 +34,6 @@ agentic-ai-learning/
 ├── 04_Experiments/
 ├── 05_Production_Architecture/
 
-```
 
 ---
 
@@ -92,12 +87,7 @@ CloudWatch / Prometheus (Observability)
 # 📸 Screenshots
 
 Add screenshots in this folder:
-
-```
-
 /assets/screenshots/
-
-```
 
 Examples to include:
 - Agent terminal execution
@@ -108,11 +98,6 @@ Examples to include:
 
 Then embed like this:
 
-```
-
-![Agent Execution](assets/screenshots/agent_run.png)
-
-```
 
 ---
 
@@ -253,6 +238,21 @@ If you are working on:
 - AI for Telecom automation
 
 Let's connect and collaborate.
-```
 
----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
