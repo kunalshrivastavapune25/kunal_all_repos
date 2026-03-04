@@ -1,3 +1,137 @@
+Here is a clean architecture diagram section you can directly paste into your README.
+
+---
+
+## 🏗 Architecture Diagrams
+
+---
+
+### 1️⃣ Personal AI Assistant with Evaluation Loop
+
+```
++---------+
+|  User   |
++---------+
+     |
+     v
++------------------+
+|  Gradio Chat UI  |
++------------------+
+     |
+     v
++------------------+
+|   LLM (Reply)    |
+|  gpt-4o-mini     |
++------------------+
+     |
+     v
++------------------+
+|  Evaluator LLM   |
+|  gemini-1.5      |
++------------------+
+     |
+  Accept? ---- No ----> Retry with Feedback
+     |
+    Yes
+     v
++------------------+
+|  Final Response  |
++------------------+
+```
+
+Flow:
+User → UI → Main LLM → Judge LLM → Retry (if needed) → Final Answer
+
+---
+
+### 2️⃣ Assistant with Tools & Push Notifications
+
+```
++---------+
+|  User   |
++---------+
+     |
+     v
++------------------+
+|  Gradio Chat UI  |
++------------------+
+     |
+     v
++---------------------------+
+| LLM with Tool Calling     |
+| gpt-4o-mini               |
++---------------------------+
+     |
+     v
++---------------------------+
+| Tool Detected?            |
++---------------------------+
+     | Yes
+     v
++---------------------------+
+| Python Tool Function      |
+| - record_user_details     |
+| - record_unknown_question |
++---------------------------+
+     |
+     v
++---------------------------+
+| Pushover Notification     |
++---------------------------+
+     |
+     v
++------------------+
+|  Final Response  |
++------------------+
+```
+
+Flow:
+User → LLM → Tool Call → Python Function → Push Alert → Response
+
+---
+
+### 3️⃣ Pure Agent Loop (Todo Planner)
+
+```
++---------+
+|  User   |
++---------+
+     |
+     v
++------------------+
+|  LLM Agent       |
++------------------+
+     |
+     v
++------------------+
+| Create Todo List |
++------------------+
+     |
+     v
++------------------+
+| Execute Tool     |
++------------------+
+     |
+     v
++------------------+
+| Update State     |
++------------------+
+     |
+   Repeat Loop
+     |
+     v
++------------------+
+| Final Answer     |
++------------------+
+```
+
+Flow:
+User → LLM → Plan → Execute → Update → Repeat → Final Answer
+
+---
+
+
+
 ---
 
 ## Use Case 3: Building a Personal AI Assistant with Gradio and LLM Evaluation
