@@ -70,11 +70,6 @@ print(response.choices[0].message.content)
 ## Use Case 2: Generate a Tough Question and Answer It
 
 ```python
-from openai import OpenAI
-from IPython.display import Markdown, display
-
-openai = OpenAI()
-
 # Step 1: Ask the LLM to generate a challenging IQ question
 question_prompt = "Please propose a hard, challenging question to assess someone's IQ. Respond only with the question."
 messages = [{"role": "user", "content": question_prompt}]
@@ -83,8 +78,6 @@ response = openai.chat.completions.create(
     messages=messages
 )
 question = response.choices[0].message.content
-print("Generated question:", question)
-
 # Step 2: Answer the generated question
 messages = [{"role": "user", "content": question}]
 response = openai.chat.completions.create(
@@ -104,24 +97,7 @@ This example sends the same challenging question to several models and then uses
 ### Step 1: Generate a question (using OpenAI)
 
 ```python
-import os
-import json
-from dotenv import load_dotenv
-from openai import OpenAI
-from anthropic import Anthropic
-from IPython.display import Markdown, display
-
-load_dotenv(override=True)
-
-# Check keys (optional)
-openai_api_key = os.getenv('OPENAI_API_KEY')
-anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
-google_api_key = os.getenv('GOOGLE_API_KEY')
-deepseek_api_key = os.getenv('DEEPSEEK_API_KEY')
-groq_api_key = os.getenv('GROQ_API_KEY')
-
 # Generate a challenging question
-openai = OpenAI()
 request = "Please come up with a challenging, nuanced question that I can ask a number of LLMs to evaluate their intelligence. Answer only with the question, no explanation."
 messages = [{"role": "user", "content": request}]
 response = openai.chat.completions.create(
@@ -129,9 +105,7 @@ response = openai.chat.completions.create(
     messages=messages
 )
 question = response.choices[0].message.content
-print("Question:", question)
 ```
-
 ### Step 2: Collect answers from various models
 
 ```python
@@ -231,21 +205,7 @@ for index, result in enumerate(ranks):
 
 ---
 
-## Commercial Implications
 
-Patterns like sending a task to multiple models and evaluating results are common in projects where response quality is critical. This approach can be universally applied to business applications that require high accuracy and robustness.
-
-> **Note:** The original notes included an HTML table with an image. For GitHub Markdown, images can be included using `![alt text](url)`. Please adjust the path to your image accordingly.
-
----
-
-## Notes
-
-- Replace placeholder model names (e.g., `gpt-4.1-nano`) with actual models available from your providers.
-- Ensure you have the necessary API keys and credits.
-- For local models, make sure Ollama is running and the model is pulled.
-
----
 
 
 
@@ -392,4 +352,5 @@ const result = await run(orchestrator, { input: [{ type: 'image_url', image_url:
 ---
 
 Each folder (`/chat-completions`, `/responses-api`, `/agents-sdk`) contains full runnable examples.
+
 
