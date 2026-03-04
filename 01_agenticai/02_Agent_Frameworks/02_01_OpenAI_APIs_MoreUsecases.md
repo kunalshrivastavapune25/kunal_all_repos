@@ -1,5 +1,6 @@
-# Building a Personal AI Assistant with Gradio and LLM Evaluation
+---
 
+## Use Case 3: Building a Personal AI Assistant with Gradio and LLM Evaluation
 This lab demonstrates how to create an interactive AI assistant that represents a real person (you!) based on your LinkedIn profile and a personal summary. We'll build a Gradio chat interface, then add an intelligent evaluation loop that checks the quality of responses and automatically retries if they don't meet the standard—all without using an agentic framework.
 
 ## Overview
@@ -10,62 +11,29 @@ This lab demonstrates how to create an interactive AI assistant that represents 
 4. **Build a chat interface** using Gradio.
 5. **Add a quality evaluator** (another LLM) that judges responses.
 6. **Implement a retry mechanism** that feeds back evaluation results to improve answers.
-
 ---
-
 ## Setup
-
 Install required packages:
-
 ```bash
 pip install openai pypdf gradio pydantic python-dotenv
 ```
 
-*Optional:* If you plan to use a non-OpenAI evaluator (e.g., Gemini), install their SDK or use an OpenAI-compatible endpoint as shown.
-
----
-
-## Step 1: Prepare Your Personal Data
-
-Place your own files in a folder called `me`:
-
-- `linkedin.pdf` – a PDF export of your LinkedIn profile.
-- `summary.txt` – a short personal summary (career highlights, skills, etc.).
-
----
-
-## Step 2: Load and Process the Data
+## Step 1: Load and Process the Data
 
 ```python
-from dotenv import load_dotenv
-from openai import OpenAI
-from pypdf import PdfReader
-import gradio as gr
-
-load_dotenv(override=True)
-openai = OpenAI()
-
-# Load LinkedIn PDF
 reader = PdfReader("me/linkedin.pdf")
 linkedin = ""
 for page in reader.pages:
     text = page.extract_text()
     if text:
         linkedin += text
-
 print("LinkedIn text extracted (first 500 chars):", linkedin[:500])
-
-# Load summary
 with open("me/summary.txt", "r", encoding="utf-8") as f:
     summary = f.read()
 ```
-
 ---
 
-## Step 3: Build the System Prompt
-
-The system prompt instructs the LLM to act as you, using your summary and LinkedIn data as context.
-
+## Step 2: Build the System Prompt
 ```python
 name = "Your Name"  # Replace with your actual name
 
@@ -79,10 +47,9 @@ If you don't know the answer, say so."
 system_prompt += f"\n\n## Summary:\n{summary}\n\n## LinkedIn Profile:\n{linkedin}\n\n"
 system_prompt += f"With this context, please chat with the user, always staying in character as {name}."
 ```
-
 ---
 
-## Step 4: Create a Basic Gradio Chat Interface
+## Step 3: Create a Basic Gradio Chat Interface
 
 Define a simple chat function that calls the LLM with the system prompt and conversation history.
 
@@ -95,19 +62,12 @@ def chat(message, history):
         messages=messages
     )
     return response.choices[0].message.content
-
 # Launch the interface
 gr.ChatInterface(chat).launch()
 ```
-
-> **Note for non-OpenAI providers:** Gradio may add extra fields to the history dictionary. If your provider (e.g., Groq) complains, clean the history first:
-> ```python
-> history = [{"role": h["role"], "content": h["content"]} for h in history]
-> ```
-
 ---
 
-## Step 5: Add a Quality Evaluator
+## Step 4: Add a Quality Evaluator
 
 We'll use a separate LLM (here, Google Gemini via OpenAI-compatible endpoint) to evaluate whether the assistant's response is acceptable.
 
@@ -115,7 +75,6 @@ We'll use a separate LLM (here, Google Gemini via OpenAI-compatible endpoint) to
 
 ```python
 from pydantic import BaseModel
-
 class Evaluation(BaseModel):
     is_acceptable: bool
     feedback: str
@@ -129,11 +88,9 @@ You are provided with a conversation between a User and an Agent. Your task is t
 The Agent is playing the role of {name} and is representing {name} on their website. \
 The Agent has been instructed to be professional and engaging, as if talking to a potential client or future employer who came across the website. \
 The Agent has been provided with context on {name} in the form of their summary and LinkedIn details. Here's the information:"
-
 evaluator_system_prompt += f"\n\n## Summary:\n{summary}\n\n## LinkedIn Profile:\n{linkedin}\n\n"
 evaluator_system_prompt += f"With this context, please evaluate the latest response, replying with whether the response is acceptable and your feedback."
 ```
-
 ### Function to generate the evaluator user prompt
 
 ```python
@@ -144,17 +101,6 @@ def evaluator_user_prompt(reply, message, history):
     user_prompt += "Please evaluate the response, replying with whether it is acceptable and your feedback."
     return user_prompt
 ```
-
-### Set up the evaluator client (using Gemini as an example)
-
-```python
-import os
-gemini = OpenAI(
-    api_key=os.getenv("GOOGLE_API_KEY"),
-    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-)
-```
-
 ### Evaluation function
 
 ```python
@@ -172,8 +118,7 @@ def evaluate(reply, message, history) -> Evaluation:
 ```
 
 ---
-
-## Step 6: Retry Logic for Unacceptable Responses
+## Step 5: Retry Logic for Unacceptable Responses
 
 If the evaluator marks a response as unacceptable, we rerun the LLM with additional context explaining why the previous attempt was rejected.
 
@@ -192,7 +137,7 @@ def rerun(reply, message, history, feedback):
 
 ---
 
-## Step 7: Integrate Evaluation into the Chat Function
+## Step 6: Integrate Evaluation into the Chat Function
 
 Now modify the chat function to evaluate each response and retry if needed.
 
@@ -237,27 +182,8 @@ Now your personal AI assistant will automatically reflect on its answers and imp
 
 ---
 
-## Commercial Implications
 
-This pattern—generate a response, evaluate it, and retry with feedback—is a simple yet powerful way to ensure high-quality outputs from LLMs. It can be applied to any customer-facing chatbot, support agent, or content generation system where accuracy and professionalism are critical. By using a second model as a judge, you create a feedback loop that mimics human quality control, all without manual intervention.
-
-> **Note on package discovery:**  
-> In this lab we used `pypdf` for PDF reading and `gradio` for UI. When you need new functionality, you can find open-source packages on [PyPI](https://pypi.org) or ask an LLM for recommendations.
-
----
-
-## Troubleshooting
-
-- **Provider compatibility:** If your main LLM or evaluator is not OpenAI, adjust the client initialization and model names accordingly.
-- **History format issues:** Some providers are strict about the message format. Use the cleaning step mentioned earlier.
-
-
-
-# Professional You: Building a Deployable AI Assistant with Tools
-
-This lab extends the personal AI assistant by adding **tool use** (function calling) and **Pushover notifications** to alert you when someone interacts with your bot. You'll also deploy the app to Hugging Face Spaces so it's publicly accessible.
-
-## What You'll Build
+## Use Case 4: Building a Personal AI Assistant with Gradio and LLM Evaluation
 
 - A Gradio chat interface that represents you (based on your LinkedIn and summary).
 - Two tools:  
@@ -535,22 +461,8 @@ Now when someone chats with your bot:
 
 ---
 
-## Commercial Implications
 
-This pattern—a personal AI assistant with notification tools—can be adapted for business applications like:
-- Customer support bots that alert staff when a query can't be answered.
-- Lead generation bots that instantly notify sales when a prospect shares contact info.
-- Any domain-specific expert bot that needs to escalate or record interactions.
-
-> **Exercise**  
-> - Deploy your own version!  
-> - Improve the resources: add a knowledge base (RAG) about yourself.  
-> - Add more tools: e.g., write to a SQL database, send emails, or integrate a calendar.  
-> - Incorporate the evaluator from the previous lab to improve response quality.
-
----
-
-# The Unreasonable Effectiveness of the Agent Loop
+## Use Case 4:  The Unreasonable Effectiveness of the Agent Loop
 
 This lab demonstrates a pure **agent loop**: an LLM that uses tools in a loop to accomplish a task, without any predefined workflow. We'll build a simple todo list manager where the LLM plans and executes steps using tools.
 
