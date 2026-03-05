@@ -8,7 +8,7 @@ In Terraform, `for_each` and `count` are **meta-arguments** used to create multi
 * **`for_each`**: Best for creating resources based on a **map** or a **set of strings**. It’s more robust because if you remove an item from the middle of the map, Terraform only deletes that specific resource.
 * **`for`**: Used inside a block to loop over a collection and produce a new one (e.g., creating a list of IDs from a list of objects).
 * **`count`**: Best for simple scaling (e.g., "give me 3 of these"). However, removing index 1 in a list of 3 often causes Terraform to "shift" and recreate subsequent resources.
-![Uploading image.png…]()
+<img width="1050" height="514" alt="image" src="https://github.com/user-attachments/assets/2cda4ddc-5c10-4043-a567-a9263db572c1" />
 
 ---
 
