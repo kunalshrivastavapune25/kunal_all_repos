@@ -102,6 +102,9 @@ terraform apply
 
 <img width="321" height="552" alt="image" src="https://github.com/user-attachments/assets/690a3bde-2d9b-4cba-bc89-938da3f2879d" />
 backend
+
+```hcl
+
 terraform {
   backend "s3" {
     bucket       = "dev-aman-tf-bucket"
@@ -118,11 +121,16 @@ terraform {
     }
   }
 }
+```
 provider
+
+```hcl
 provider "aws" {
   region = "us-east-1"
 }
+```
 
+```hcl
 variable
 vpc-name            = "Jenkins-vpc"
 igw-name            = "Jenkins-igw"
@@ -136,9 +144,11 @@ iam-policy-eks      = "Tetris-iam-policy-eks"
 iam-policy-node     = "Tetris-iam-policy-node"
 cluster-name        = "Tetris-EKS-Cluster"
 eksnode-group-name  = "Tetris-Node-Group"
-
+```
 
 eks
+
+```hcl
 resource "aws_eks_cluster" "eks-cluster" {
   name     = var.cluster-name
   role_arn = aws_iam_role.EKSClusterRole.arn
@@ -173,13 +183,13 @@ data "aws_subnet" "subnet" {
   }
 }
 
-
+```
 ## 2. Jenkins-Server-TF
 
 ## 3. Jenkins-Pipeline-Code
 <img width="268" height="169" alt="image" src="https://github.com/user-attachments/assets/62d277b2-166a-4158-beba-ee8a701fc50a" />
 
-
+```hcl
 properties([
     parameters([
         string(defaultValue: 'variables.tfvars', description: 'Specify the file name', name: 'File-Name'),
@@ -372,7 +382,7 @@ pipeline {
     }
 }
 
-
+```
 
 ## 4. How to make jenkins sercer
 <img width="444" height="655" alt="image" src="https://github.com/user-attachments/assets/46ec2b6f-6e3f-4fef-8ec2-255980f9b31b" />
