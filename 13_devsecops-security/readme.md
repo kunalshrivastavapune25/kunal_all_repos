@@ -43,6 +43,104 @@ Applications run inside the cluster with multiple layers of security and observa
 - ✅ Automated security in CI/CD
 - ✅ Faster and safer deployments
 - ✅ Continuous compliance
+
+
+
+  <img width="853" height="480" alt="image" src="https://github.com/user-attachments/assets/ed35d345-c59c-4b1e-be51-e792ec39618c" />
+
+  # 🚀 AWS EKS | Engineered & Deployed a Complete DevSecOps + GitOps Architecture from Infrastructure to Observability
+
+I recently engineered an end-to-end cloud-native DevSecOps platform on Amazon Web Services using Amazon EKS, focusing on secure delivery, GitOps automation, and full-stack observability.
+
+This was not limited to CI/CD.
+
+I architected and managed the complete infrastructure layer, security integrations, deployment workflows, and monitoring stack.
+
+---
+
+# ☁️ Cloud & Infrastructure Engineering
+
+- ✅ Provisioned and configured EKS cluster  
+- ✅ Designed cluster networking and node groups  
+- ✅ Configured IAM roles and OIDC provider  
+
+- ✅ Used a dedicated EC2 master machine to:
+  - Manage AWS CLI & cluster lifecycle  
+  - Host DevSecOps tooling  
+  - Control Kubernetes workloads  
+
+- Managed cluster access, security groups, and NodePort exposure  
+- Hands-on ownership of the infrastructure — not just deployments  
+
+---
+
+# 🔐 DevSecOps Implementation (Security First)
+
+Integrated security at multiple levels using:
+
+- ✅ Jenkins (CI/CD Orchestration with Shared Groovy Libraries)  
+- ✅ OWASP Dependency Check  
+- ✅ SonarQube (Static Code Analysis & Quality Gates)  
+- ✅ Trivy (Image & Filesystem Vulnerability Scanning)  
+- ✅ Docker  
+- ✅ GitHub  
+
+**Capabilities implemented:**
+
+- ✔ Secure image build & push  
+- ✔ Code quality enforcement  
+- ✔ Vulnerability scanning before release  
+- ✔ Automated deployment notifications  
+- ✔ Reusable Jenkins Shared Libraries  
+
+Security was embedded across the lifecycle, not bolted on.
+
+---
+
+# 🔄 GitOps-Based Deployment Model
+
+Implemented GitOps with Argo CD
+
+- ✅ Managed declarative deployments on Kubernetes  
+- ✅ Ensured production state always reconciles with Git  
+- ✅ Removed manual cluster changes entirely  
+- ✅ Infrastructure and applications were version-controlled and traceable  
+
+---
+
+# 📊 Monitoring & Observability
+
+Deployed and configured:
+
+- ✅ Prometheus  
+- ✅ Grafana  
+- ✅ Helm  
+
+Capabilities implemented:
+
+- Cluster health monitoring  
+- Resource utilization dashboards  
+- Workload visibility  
+- Deployment-level insights  
+
+Observability was treated as a core architectural component.
+
+---
+
+# 🎯 Core Competencies Demonstrated
+
+- ✅ AWS Infrastructure Design  
+- ✅ Kubernetes (EKS) Cluster Management  
+- ✅ DevSecOps Architecture  
+- ✅ GitOps Workflow Engineering  
+- ✅ CI/CD System Design  
+- ✅ Container Security  
+- ✅ Monitoring & Reliability Engineering  
+
+---
+
+I am actively learning, continuously upgrading my skills, and building real-world cloud-native and DevSecOps projects to deepen my practical expertise.
+
 - ✅ Secure Kubernetes workloads
 
 DevSecOps is not just about tools — it’s about building security into the entire software delivery lifecycle.
