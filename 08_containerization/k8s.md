@@ -259,6 +259,7 @@ Alternative example:
 🔎 They want architectural thinking, not just execution.
 
 ---
+<img width="1080" height="1282" alt="image" src="https://github.com/user-attachments/assets/30e8a118-4e77-4793-891e-a96973a747d4" />
 
 ## 6️⃣ What core infrastructure did you build from scratch?
 
@@ -331,3 +332,6 @@ If you want high-impact answers tailored exactly to your profile, send me:
 I’ll rewrite all answers to sound strong, consistent, and senior-level.
 
 Let’s make this interview-ready 💪
+
+<img width="802" height="1202" alt="image" src="https://github.com/user-attachments/assets/18d05634-1a22-4c4b-9080-e7b601b60062" />
+
