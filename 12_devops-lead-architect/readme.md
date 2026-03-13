@@ -355,7 +355,7 @@ Update DNS to point to DR Region's Ingress/Load Balancer.
 Active-passive EKS architecture
 This diagram illustrates a Warm Standby or Active-Passive architecture, where both regions have EKS clusters and continuously replicated data, enabling rapid failover.
 
-text
+
 GLOBAL DNS / ROUTE 53
          |
          v
@@ -401,9 +401,10 @@ Global Traffic Management: DNS (Route 53) or Global Accelerator directs traffic.
 
 Fast RTO: Once traffic is redirected, applications in the DR region are already running or can scale up very quickly due to pre-warmed infrastructure and synchronized application state.
 
-
+```
 
 ## 14. kubernetes upgrade
+	```text
 	https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html
 	https://www.youtube.com/watch?v=Cfznp8jRh7I&t=5s
 	Regular upgrades are necessary due to the frequent release of new Kubernetes versions (every three months).
@@ -451,7 +452,7 @@ Fast RTO: Once traffic is redirected, applications in the DR region are already 
 		Verify the upgrade by running functional or end-to-end tests to ensure all components work seamlessly.
 
 	Upgrading Kubernetes clusters is a critical task for maintaining system integrity and performance. The process involves careful preparation, including reviewing release notes, ensuring version compatibility, and testing in lower environments. The upgrade process consists of three main steps: upgrading the control plane, upgrading node groups, and upgrading add-ons. Utilizing rolling updates can help achieve zero downtime. Understanding the nuances of the upgrade process, including managing custom nodes and add-ons, is essential for DevOps and Cloud Engineers. Following the outlined steps and prerequisites will facilitate a smoother upgrade experience, making this knowledge valuable for technical professionals and interviews. Additional resources, such as AWS documentation, are available for further guidance.
-
+```
 ## 5. rbac  control tower  
 
 ## 14. cost reduction in cloud
