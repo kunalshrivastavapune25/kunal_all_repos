@@ -287,7 +287,12 @@ This answer demonstrates technical depth, practical experience, business impact,
 
 ## 17. Blue Green and Canary Deployment in EKS
 
-Placeholder for strategies to implement blue/green and canary deployments on EKS using ArgoCD, Flagger, or AWS App Mesh.
+ - https://www.youtube.com/watch?v=0QhUhrWGB9k
+ - Deployment strategies in Kubernetes, including Rolling Update, Canary, and Blue-Green, are essential for maintaining application availability and user experience during upgrades. Each strategy has distinct advantages and use cases. Rolling Updates allow for zero-downtime upgrades but can be complex. Canary Deployments enable gradual rollouts with real-time feedback, reducing risk. Blue-Green Deployments provide a safe rollback mechanism but are resource-intensive. Understanding these strategies is crucial for effective application deployment in Kubernetes environments, especially for technical professionals in software development and operations.
+ - 
+<img width="956" height="562" alt="image" src="https://github.com/user-attachments/assets/de127819-7ddd-4ebf-9876-e9f445ef2347" />
+
+<img width="1132" height="811" alt="image" src="https://github.com/user-attachments/assets/50c2eee8-5936-455f-b47b-d25d3db5bef7" />
 
 ---
 
