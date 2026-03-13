@@ -224,7 +224,7 @@ Placeholder for notes on AWS RBAC, IAM, and AWS Control Tower.
 
 ---
 ## 16. Cost Reduction in Cloud
-
+```text
 2-Minute Interview Answer: Cloud Cost Optimization
 Opening Statement
 "Cloud cost optimization is critical because while cloud offers scalability and agility, uncontrolled usage can lead to massive bills—sometimes 30-40% of infrastructure spend goes to waste through idle resources, oversized instances, and poor architecture decisions."
@@ -281,7 +281,7 @@ Total speaking time: ~2 minutes
 
 This answer demonstrates technical depth, practical experience, business impact, and awareness of cutting-edge AI solutions—exactly what senior architect interviews look for.
 
-
+```
 
 ---
 
