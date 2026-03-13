@@ -1,61 +1,373 @@
-graph TD
-    subgraph Region A (Primary - us-east-1)
-        EKS_A[EKS Cluster - Primary]
-        APP_A(Application Pods)
-        PV_A[Persistent Volumes - EBS/EFS]
-        VELERO_A(Velero Server - in EKS_A)
-        S3_VELERO_A[S3 Bucket - Velero Backups]
-        DB_A[Database - RDS Multi-AZ]
-        LB_A[Application Load Balancer]
-    end
+Interview Preparation Notes – DevOps / Platform Engineering
+This repository contains my personal notes, talking points, and resources for preparing for a senior DevOps / Platform Engineering interview (focus on microservices migration, GitOps, Kubernetes, and AWS EKS). The content is organized for quick revision and includes real-world challenges, solutions, best practices, and references to courses, projects, and documentation.
 
-    subgraph Region B (Secondary - us-west-2 - Warm Standby)
-        EKS_B[EKS Cluster - Standby]
-        APP_B(Application Pods - Deployed post-DR)
-        PV_B[Persistent Volumes - Replicated/Restored]
-        S3_VELERO_B[S3 Bucket - Replicated Velero Backups]
-        DB_B[Database - RDS Read Replica]
-        LB_B[Application Load Balancer - Ready]
-    end
+Table of Contents
+1. Introduction / About Myself
 
-    subgraph DR Orchestration
-        R53[Route 53 Global DNS]
-        IaC[CloudFormation/Terraform]
-        SSM[AWS Systems Manager Automation]
-    end
+2. Best Practices & Daily / Weekly Work
 
-    APP_A -- Writes/Reads --> PV_A
-    APP_A -- Writes/Reads --> DB_A
-    LB_A -- Routes Traffic --> APP_A
+3. Notable Fixes / Achievements
 
-    VELERO_A -- Backs up K8s Objects + CSI Snapshots --> S3_VELERO_A
-    S3_VELERO_A -- S3 Cross-Region Replication (CRR) --> S3_VELERO_B
-    PV_A -- EBS Cross-Region Snapshot Copy --> PV_B
-    PV_A -- EFS Replication --> PV_B
-    DB_A -- RDS Cross-Region Read Replica --> DB_B
+4. Major Challenges Faced & Solutions
 
-    R53 -- Primary record targets --> LB_A
-    R53 -- Failover record targets --> LB_B
+5. Monitoring and Observability
 
-    click R53 "DNS Failover"
-    click VELERO_A "Velero Backup Process"
-    click S3_VELERO_A "S3 CRR"
-    click PV_A "EBS/EFS Replication"
-    click IaC "Infra Provisioning (if Cold Standby)"
-    click SSM "DR Runbook Automation"
+6. Pod Troubleshooting
 
-    style EKS_A fill:#f9f,stroke:#333,stroke-width:2px
-    style EKS_B fill:#ccf,stroke:#333,stroke-width:2px
-    style S3_VELERO_A fill:#cfc,stroke:#333,stroke-width:1px
-    style S3_VELERO_B fill:#cfc,stroke:#333,stroke-width:1px
-    style PV_A fill:#fcc,stroke:#333,stroke-width:1px
-    style PV_B fill:#ccf,stroke:#333,stroke-width:1px
-    style DB_A fill:#fcc,stroke:#333,stroke-width:1px
-    style DB_B fill:#ccf,stroke:#333,stroke-width:1px
+7. Handwritten Notes
 
-    %% Failover Path
-    S3_VELERO_B -- Velero Restore --> EKS_B
-    PV_B -- Attaches/Mounts --> EKS_B
-    DB_B -- Promoted to Primary --> EKS_B
-    EKS_B -- Deploys --> APP_B
-    APP_B -- Served by --> LB_B
+8. Kubernetes App – Useful Links
+
+9. Veeramala Interview Questions
+
+10. Veeramala Udemy Project
+
+11. Aman Pathak Tetris Project
+
+12. SonarQube – 70% Passing
+
+13. RBAC / Control Tower
+
+14. EKS Disaster Recovery (DR)
+
+15. Kubernetes Upgrade
+
+16. Cost Reduction in Cloud
+
+17. Blue Green and Canary Deployment in EKS
+
+18. Security and Code Quality
+
+19. Karpenter and ArgoCD
+
+20. Agentic AI DevOps
+
+21. Check CloudThat OneNote
+
+22. Ansible & Terraform (Stack, Dependencies, Output Variables)
+
+23. AWS Well-Architected Frameworks
+
+24. AWS Cross-Account Questions
+
+25. ITIL 4 & PM – Incident & Problem Management
+
+26. ITIL 4 & PM – Costing and Resourcing
+
+27. DevOps Management
+
+28. Lead Roles
+
+29. Major Incident in Production
+
+30. How to Create a Helm Chart
+
+1. Introduction / About Myself
+Currently working at Netcracker on a large-scale multi-microservice architecture
+→ Key domains: Billing, Customers, GSM, Locations, Accounts, Provisioning, etc.
+
+Multiple dedicated development and DevOps teams per microservice domain
+
+My current role:
+
+Dev Lead for migration from legacy monolith → modern microservices target architecture
+
+Active member of DevOps team responsible for Products, Customers, Accounts, and related microservices
+
+Core responsibilities:
+
+Implementing and improving DevOps practices & processes
+
+Containerization (Docker)
+
+Orchestration (Kubernetes – EKS)
+
+CI/CD + GitOps (GitHub Actions + ArgoCD)
+
+Infrastructure as Code (Terraform, Ansible)
+
+2. Best Practices & Daily / Weekly Work
+Closely collaborate with multiple development teams using Agile methodology
+
+Attend sprint planning, backlog refinement, daily stand-ups
+
+Understand weekly sprints + monthly roadmaps
+→ Helps me anticipate upcoming infrastructure & deployment needs
+
+Common requests I handle from dev teams:
+
+Provision new environments / clusters (IaC-first approach)
+
+Create modular, reusable EKS clusters via Terraform
+
+Kubernetes manifests & deployment troubleshooting
+
+Containerization support (especially for junior developers)
+
+Writing / reviewing Dockerfiles
+
+Git branching strategy enforcement & repository hygiene
+
+Setting up GitHub webhooks, repository settings, branch protection rules
+
+Documentation & knowledge sharing:
+
+Create & maintain best-practice guides (e.g., "How to containerize a microservice")
+
+Share documentation across teams (especially those without dedicated DevOps engineers)
+
+3. Notable Fixes / Achievements
+Problem: ReplicaSets suddenly not creating new pods → pods stuck in Pending state
+Root cause: IP exhaustion in the subnet (EKS node/ENI limits reached)
+Action taken:
+
+Identified subnet IP utilization spike
+
+Worked with AWS / networking team (AM = Account Manager?) to increase secondary CIDR or subnet size
+
+Added monitoring alerts for IP usage
+
+Documented the issue & mitigation steps for the team
+
+4. Major Challenges Faced & Solutions
+Challenge 1 – Inconsistent & fragmented CI/CD pipelines
+Before:
+
+Every microservice had different CI/CD setup (or none)
+
+Some had partial GitHub Actions CI, no proper CD to Kubernetes
+
+Manual deployments were common → error-prone & slow
+
+What I did:
+
+Studied existing pipelines
+
+Designed standardized template (GitHub Actions + ArgoCD)
+
+Built Proof of Concept on one critical service → demonstrated zero-touch deployment
+
+Gradually rolled out standardized pipeline to all services (~3–4 months)
+
+Result: Consistent, reliable, fully automated deployments across the organization
+
+Challenge 2 – Terraform without remote state & locking
+Before:
+
+Local state files → frequent conflicts, lost state, manual copy-paste mess
+
+No versioning, no collaboration safety
+
+What I did:
+
+Migrated everything to remote backend (S3 + DynamoDB for locking)
+
+Enforced state locking
+
+Refactored configurations into modular reusable structure
+
+Result: Stable, collaborative IaC → fewer errors, higher team confidence
+
+Bonus – Handling QA requests for manual pre-validation (while keeping GitOps purity)
+Goal: Allow QA to test manifests before automatic ArgoCD sync, without breaking GitOps principles
+
+Approaches I use (in order of preference):
+
+Preferred (GitOps way)
+
+Keep environment-specific configs in Git (dev/, qa/, prod/)
+
+Create separate ArgoCD Application for QA with auto-sync disabled
+
+QA tests → after approval → merge to main → prod syncs automatically
+
+Temporary / emergency validation
+
+Manually apply manifest with kubectl apply -f ... in QA cluster
+
+Immediately document & clean up after testing
+
+Never allow long-term drift
+
+Guiding principle:
+Minimize direct cluster changes → maximize traceability, auditability & security through GitOps.
+
+5. Monitoring and Observability
+GitHub repo: observability-zero-to-hero
+
+Udemy course reference: Ultimate DevOps and Cloud Interview Guide
+
+Personal note:
+JUST MAKE SURE U ADD A POINT IN UR INTRODUCTION THAT I MADE PROMQL FOR MY CUSTOM MONITORING
+AND CHATGPT HOW IT IS DONE
+
+Agentic AI idea:
+JUST CHECK IG THIS CAN BE DONE FROM AGENTIC AI I.E INCIDENT MANAGEMENT LIKE CREATING JIRA TICKETS AND ALL THROUGH MCPS
+LIKE LETS SAY ALERT MANAGER SENDS SOME ALERT THEN E2E INCIDENT HANDLING CAN BE DONE FROM AGENTIC AI AUTOMATICALLY IN NO TIME
+JUST GO TROUGH PAGERDUTY ALL GYAN SAME THING THINK OF IMPLEMENTING IN AGENTIC AI
+
+6. Pod Troubleshooting
+Udemy lecture: Troubleshooting Pods
+
+7. Handwritten Notes
+Location: C:\kunal\LINKEDIN IMAGES\ (or local path) – scan/photos of handwritten Kubernetes/DevOps notes.
+
+8. Kubernetes App – Useful Links
+Ahmed Ali Butt LinkedIn
+
+LinkedIn Post – Kubernetes App
+
+Local images: C:\kunal\LINKEDIN IMAGES\
+
+9. Veeramala Interview Questions
+Udemy – Ultimate DevOps and Cloud Interview Guide
+
+10. Veeramala Udemy Project
+Ultimate DevOps Project with Resume Preparation
+
+GitHub: ultimate-devops-project-demo
+
+GitHub: ultimate-devops-project-aws
+
+11. Aman Pathak Tetris Project
+GitHub: End-to-End Kubernetes DevSecOps Tetris Project
+
+Blog: DevSecOps Mastery – Deploy Tetris on EKS with Jenkins & ArgoCD
+
+12. SonarQube – 70% Passing
+Aim to achieve at least 70% quality gate passing in SonarQube scans.
+
+13. RBAC / Control Tower
+Placeholder for notes on AWS RBAC, IAM, and AWS Control Tower.
+
+14. EKS Disaster Recovery (DR)
+Comprehensive guide from a Principal AWS Solutions Architect (simulated).
+
+Core Concepts
+What “DR” actually means for an EKS cluster
+Disaster Recovery (DR) for an Amazon EKS cluster is about ensuring your applications remain available and your data is recoverable in the event of a catastrophic failure (beyond a single AZ, possibly entire region). DR focuses on:
+
+Application Data (databases, persistent volumes, S3)
+
+Kubernetes Application State (Deployments, Services, ConfigMaps, etc.)
+
+EKS Worker Nodes
+
+Associated Infrastructure (load balancers, VPC, DNS)
+
+DR is distinct from High Availability (HA). HA is within a region; DR is cross-region recovery.
+
+Typical RTO/RPO targets (business-driven):
+
+Tier 0/1 (Mission-Critical): RPO < 15 min, RTO < 1 hour → Active-Active or Hot Standby
+
+Tier 2 (Important): RPO 1-4 hours, RTO 2-4 hours → Warm Standby / Pilot Light
+
+Tier 3 (Non-Critical): RPO 24h, RTO 8-24h → Backup & Restore
+
+Modern DR Approaches in 2026
+Application-First + GitOps: IaC (Terraform/CloudFormation) + GitOps (ArgoCD/Flux) for rapid cluster recreation and app sync.
+
+Data replication is paramount: Use RDS cross-region replicas, Aurora Global Database, DynamoDB Global Tables, S3 CRR.
+
+Common Patterns:
+
+Backup and Restore (Cold Standby) – simplest, use AWS Backup for EKS or Velero.
+
+Pilot Light (Warm Standby) – minimal DR cluster running, data replicated, apps scaled to zero.
+
+Warm Standby (Active-Passive) – fully provisioned DR cluster, apps ready, data replicated.
+
+Multi-Site Active-Active – both regions serve traffic, requires stateless apps or complex data sync.
+
+Most popular now: Pilot Light / Warm Standby – balance of cost, RTO/RPO, and complexity.
+
+New AWS features (2024–2026) impacting DR:
+
+AWS Backup for EKS (mature, policy-driven backup of PVs and K8s resources)
+
+CDK / Terraform Cloud for multi-region IaC
+
+Aurora Global Database enhancements (sub-second replication)
+
+S3 Multi-Region Access Points
+
+GitOps maturity (ArgoCD/Flux)
+
+Diagram Descriptions
+Multi-region Velero DR flow – shows backup of K8s objects and PVs to S3, cross-region replication, and restore in DR region, plus separate DB replication.
+
+Active-passive EKS architecture – both regions have EKS clusters, GitOps sync, data replication, global traffic management (Route53 failover).
+
+15. Kubernetes Upgrade
+References:
+
+AWS EKS Update Cluster Docs
+
+YouTube: EKS Upgrade Guide
+
+Key Points:
+
+Regular upgrades needed (new K8s versions every 3 months).
+
+Prerequisites: cordon nodes, review release notes, test in lower environments, check version compatibility (control plane, kubelet, cluster autoscaler), ensure available IP addresses.
+
+Upgrade process: control plane (manual via AWS UI/eksctl) → node groups (managed or custom) → add-ons (kube-proxy, VPC CNI).
+
+Node upgrade approaches: managed node groups (AWS handles), custom nodes (manual), hybrid.
+
+Use rolling updates for zero downtime.
+
+Post-upgrade: test controllers (Helm, ArgoCD, Prometheus) and run functional tests.
+
+16. Cost Reduction in Cloud
+Placeholder for notes on cloud cost optimization strategies (e.g., right-sizing, spot instances, savings plans, resource cleanup).
+
+17. Blue Green and Canary Deployment in EKS
+Placeholder for strategies to implement blue/green and canary deployments on EKS using ArgoCD, Flagger, or AWS App Mesh.
+
+18. Security and Code Quality
+Placeholder for notes on security best practices (image scanning, pod security standards, network policies) and code quality tools (SonarQube, Snyk, etc.).
+
+19. Karpenter and ArgoCD
+Placeholder for notes on Karpenter (Kubernetes node autoscaler) and integration with ArgoCD for GitOps.
+
+20. Agentic AI DevOps
+Placeholder for exploring AI-driven incident management, automated Jira ticket creation via MCPS, and integration with PagerDuty.
+
+21. Check CloudThat OneNote
+Personal reference: notes stored in CloudThat OneNote.
+
+22. Ansible & Terraform (Stack, Dependencies, Output Variables)
+Placeholder for Terraform concepts: managing stack dependencies, using output variables, remote state, and Ansible integration.
+
+23. AWS Well-Architected Frameworks
+Placeholder for review of AWS Well-Architected pillars (Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability).
+
+24. AWS Cross-Account Questions
+Common scenarios:
+
+EC2 in Account A accessing EC2 in Account B
+
+S3 cross-account access using IAM roles
+
+Cross-account VPC peering / Transit Gateway
+
+25. ITIL 4 & PM – Incident & Problem Management
+Placeholder for notes on ITIL 4 practices for incident, problem, and change management, aligned with project management (PM) best practices.
+
+26. ITIL 4 & PM – Costing and Resourcing
+Placeholder for notes on financial management, cost allocation, and resource planning in ITIL 4 context.
+
+27. DevOps Management
+Placeholder for notes on leading DevOps teams, culture, metrics (DORA), and continuous improvement.
+
+28. Lead Roles
+Placeholder for responsibilities and expectations of a DevOps Lead / Tech Lead role.
+
+29. Major Incident in Production
+Placeholder for handling major incidents: communication, root cause analysis, blameless postmortems, and preventive measures.
+
+30. How to Create a Helm Chart
+YouTube Tutorial: Helm Chart Creation
+
