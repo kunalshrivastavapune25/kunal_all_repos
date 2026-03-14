@@ -808,8 +808,42 @@ Placeholder for exploring AI-driven incident management, automated Jira ticket c
 
 ## 21. Check CloudThat OneNote
 
-Personal reference: notes stored in CloudThat OneNote.
+### AWS DevOps Important Links
 
+#### 1. Prerequisite of AWS DevOps Engineer – Professional Course
+[Prerequisites_DevOps_on_AWS_Updated.pdf](https://aws-devops-course-swami-new.s3.us-east-1.amazonaws.com/Prerequisites_DevOps_on_AWS_Updated.pdf)
+
+---
+
+#### 2. CloudFormation Templates
+[Download CloudFormation Templates](https://aws-devops-course-swami-new.s3.amazonaws.com/final_cfn.zip)
+
+---
+
+#### 3. First CodePipeline Code
+[Download CodePipeline Code](https://aws-devops-course-swami-new.s3.us-east-1.amazonaws.com/codecommit-code-updated.zip)
+
+---
+
+#### 4. Instructions for CodeBuild and CodeDeploy
+[CodeBuild_CodeDeploy Instructions](https://aws-devops-course-swami-new.s3.amazonaws.com/CodeBuild_CodeDeploy.txt)
+
+---
+
+#### 5. ECS CI/CD Demo Code
+[Download ECS Fargate CI/CD Demo Code](https://aws-devops-course-swami-new.s3.us-east-1.amazonaws.com/ECS_Fargate_CICD_Demo_Code_Updated.zip)
+
+---
+
+### Additional Resources
+
+The following resources can be found on **AWS Skill Builder**:
+
+6. AWS DevOps Exam Guide  
+7. Exam Domain-wise Courses  
+8. AWS DevOps Official Question Set  
+9. Exam Readiness: AWS Certified DevOps Engineer – Professional
+ - C:\kunal\cloudthat training devops\sameer cloudthat
 ---
 
 ## 22. Ansible & Terraform (Stack, Dependencies, Output Variables)
@@ -940,6 +974,51 @@ Placeholder for handling major incidents: communication, root cause analysis, bl
 ## 30. How to Create a Helm Chart
 
 - [YouTube Tutorial: Helm Chart Creation](https://www.youtube.com/watch?v=jUYNS90nq8U)
+- 1. **Generating a Helm Chart**:
+   - Use the command `helm create <chart-name>` (e.g., `helm create web-app-1`) to generate the necessary folder structure and files for your Helm chart.
+   - The generated folder includes:
+     - `charts.yaml`: Metadata about the Helm chart.
+     - `values.yaml`: Default configuration values.
+     - `templates/`: Directory for Kubernetes resource templates.
+
+2. **Customizing the Chart**:
+   - Remove unnecessary files from the `templates/` folder and add your custom application manifests.
+   - Modify the `values.yaml` file to suit your application requirements, starting with a blank file for better understanding.
+
+3. **Deploying the Application**:
+   - Navigate to the parent folder of your Helm chart and run:
+     ```
+     helm install <release-name> ./<chart-folder>
+     ```
+   - Verify successful deployment using `kubectl get all`.
+
+4. **Using Helm Templating**:
+   - Customize deployments for various environments (development, staging, production) using Helm templating.
+   - Reference values in your templates with the syntax `{{ .Values.<key> }}`.
+
+5. **Creating Environment-Specific Values Files**:
+   - Create separate configuration files, such as `values-dev.yaml` and `values-prod.yaml`, to override settings for different environments.
+   - Deploy with:
+     ```
+     helm upgrade <release-name> ./<chart-folder> --values values-dev.yaml
+     ```
+   - This allows for tailored configurations like namespace, image tags, and custom messages.
+
+6. **Outputting Configuration Information**:
+   - Add a `notes.txt` file in the `templates/` folder to provide users with commands to access the application post-installation, utilizing templating for dynamic content.
+
+7. **Final Steps**:
+   - Ensure the necessary namespaces for development and production are created in your Kubernetes cluster.
+   - Deploy applications using the appropriate Helm commands for each environment.
+
+### Additional Notes:
+- To specify an additional values file, use the `-f` switch (e.g., `-f values-dev.yaml`) and specify the namespace with `-n dev` to ensure the Helm release aligns with the Kubernetes resources.
+- An error was encountered due to an incorrect value; the correct value is `web-app-1`, which will be updated in the README file.
+- After deploying to production using the `prod.yaml` file and the `prod` namespace, you can view all releases with `helm ls --all-namespaces`.
+- Verify resources in each environment using `kubectl get all -n dev` for development and `kubectl get all -n prod` for production.
+- Access the web application to check custom headers for both environments, confirming functionality.
+
+By the end of this tutorial, you will have the skills to effectively customize and deploy Kubernetes applications using Helm, making it a valuable resource for job seekers and personal projects. For further learning, check the video description for additional resources and links to related content. Thank you for watching!
 
 ---
 
