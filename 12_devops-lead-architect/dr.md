@@ -475,14 +475,328 @@ In summary, using a deployment strategy in Kubernetes is essential for minimizin
 ---
 
 ## 18. Security and Code Quality
+ - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/13_devsecops-security/readme.md
+#### Overview
+- Goal: integrate security into every stage of the CI/CD lifecycle for Kubernetes workloads on EKS.
+- Key enablers: identity with IRSA, image provenance, runtime security, policy-as-code, and end-to-end observability.
 
-Placeholder for notes on security best practices (image scanning, pod security standards, network policies) and code quality tools (SonarQube, Snyk, etc.).
+#### Core Principles
+- Shift-left security: scan and vet artifacts early.
+- Least privilege: apply only necessary permissions at each layer.
+- Policy as code: enforce compliance and guardrails automatically.
+- Runtime protection: detect and respond to unusual behavior in production.
+- Observability: collect logs, metrics, and traces to reveal risks quickly.
+
+#### EKS-Specific Considerations
+- IRSA (IAM Roles for Service Accounts) to give pods fine-grained AWS rights without long-lived keys.
+- Private API endpoints and security groups for pod networking (SGs for pods).
+- Encryption at rest for secrets (KMS) and encrypted etcd data if enabled.
+- Image scanning via ECR and SBOMs for supply-chain transparency.
+- Pod Security Standards (PSS) and policy-driven admission controls.
+
+#### Best Practices
+
+- Shift-Left Security
+  - Integrate SBOM generation (e.g., Syft) and vulnerability scanning (Trivy, Snyk, Grype) in CI.
+  - Block deployments with high-severity findings or license violations.
+  - Pin and immutably tag images; enforce provenance checks.
+
+- Secure Supply Chain
+  - Enable Amazon ECR image scanning and enforce remediation gates.
+  - Sign images (e.g., cosign) and validate provenance in CI/CD.
+  - Use immutable infrastructure and pull policies to prevent drift.
+
+- Identity and Access Management
+  - Use IRSA for all pod-to-AWS resource access.
+  - Apply least privilege to IAM roles and Kubernetes RBAC; separate duties by namespace.
+  - Regularly rotate credentials and audit IAM activity.
+
+- Secrets and Configuration
+  - Store secrets in AWS Secrets Manager or Parameter Store; fetch at runtime.
+  - Avoid secrets in Kubernetes volumes or environment variables.
+  - Encrypt etcd data where supported; use KMS-backed encryption providers.
+
+- Network and Pod Hardening
+  - Enforce Kubernetes Network Policies to limit pod communication.
+  - Use a service mesh (Istio or Linkerd) for mTLS and policy enforcement.
+  - Enable Pod Security Standards to prevent dangerous capabilities and privilege escalation.
+
+- Run-time Security
+  - Deploy Falco or similar runtime security to detect anomalous container behavior.
+  - Monitor for abnormal process activity, file changes, and outgoing connections.
+
+- Observability and Incident Response
+  - Centralize logs (CloudWatch), metrics (Prometheus), and traces (Jaeger/OpenTelemetry).
+  - Establish runbooks and alerting for common EKS security incidents.
+  - Regularly test incident response and disaster recovery drills.
+
+- Compliance and Governance
+  - Treat security policies as code (OPA or Kyverno) and enforce at admission.
+  - Maintain an SBOM, vulnerability posture, and audit trails for audits.
+
+#### Popular Tools (by category)
+
+- CI/CD and Source Control
+  - GitHub Actions, GitLab CI, AWS CodePipeline
+  - GitHub or GitLab for source control
+
+- Image Scanning and SBOM
+  - Trivy, Grype, Snyk, Anchore
+  - Syft (SBOM) and SPDX
+
+- Registry and Provenance
+  - Amazon ECR (with image scanning)
+  - Cosign for signing and verification
+
+- Policy as Code / Admission
+  - Kyverno, OPA (Gatekeeper)
+  - Pod Security Standards (PSS)
+
+- Runtime and Network Security
+  - Falco (runtime detection)
+  - Istio or Linkerd (service mesh)
+  - Network Policies (Kubernetes)
+
+- Secrets and Identity
+  - AWS Secrets Manager, AWS SSM Parameter Store
+  - IAM Roles for Service Accounts (IRSA)
+
+- Observability and Telemetry
+  - CloudWatch, Prometheus, Grafana
+  - OpenTelemetry, Jaeger, Loki
+
+- Compliance and Governance
+  - AWS Security Hub, AWS Config
+  - CloudTrail for audit logging
+
+- Backup / DR
+  - Velero (backup/restore for Kubernetes)
+
+#### Quick Start Checklist
+- Create a private EKS cluster; enable IRSA and private API endpoints.
+- Enable encryption at rest for secrets (KMS) and, if applicable, etcd.
+- Enable ECR image scanning and set up a gate for remediation.
+- Install policy-as-code (Kyverno or OPA) and set admission controls.
+- Implement runtime security (Falco) and a service mesh (optional but recommended).
+- Enforce network policies and Pod Security Standards.
+- Centralize logs/metrics and establish alerting for security events.
+
 
 ---
 
 ## 19. Karpenter and ArgoCD
 
-Placeholder for notes on Karpenter (Kubernetes node autoscaler) and integration with ArgoCD for GitOps.
+#### Table of contents
+- What they are (at a glance)
+- Prerequisites
+- Karpenter: install and configure
+- ArgoCD: install and configure
+- Using them together (GitOps for Provisioners)
+- Validation and quick checks
+- References
+
+---
+
+#### What they are (at a glance)
+
+- Karpenter
+  - A Kubernetes cluster autoscaler that provisions compute on-demand from your cloud provider.
+  - Responds to workloads by creating/destroying nodes, based on actual workloads and policies.
+
+- ArgoCD
+  - A GitOps CD tool for Kubernetes.
+  - Keeps your cluster desired-state in sync with a Git repository, via Applications, Projects, and automated sync policies.
+
+---
+
+#### Prerequisites
+
+- A Kubernetes cluster (EKS, AKS, GKE, etc.) with kubectl access.
+- Administrative access to install cluster components.
+- Cloud-provider credentials set up for Karpenter (permissions to create VMs/instances, subnets, security groups, etc.).
+- A Git repository for ArgoCD Applications (or plan to point ArgoCD at one).
+- Optional but recommended: a domain or load balancer setup if you plan to expose ArgoCD UI externally.
+
+---
+
+#### Part 1 — Karpenter: install and configure
+
+Purpose: automatically provision and manage nodes in response to workloads.
+
+##### 1) Install Karpenter
+
+- Quick start (latest stable release):
+  - Create the Karpenter components in your cluster:
+    - kubectl apply -f https://github.com/karpenter/karpenter/releases/latest/download/karpenter.yaml
+  - Note: The URL above installs the controller and a basic RBAC setup. You may need cloud-provider-specific prerequisites (IAM roles, instance profiles, subnets, security groups) per your cloud.
+
+- Recommended next step: create a Provisioner resource to tell Karpenter how to provision nodes.
+
+##### 2) Create a Provisioner (example)
+
+Adjust to your cloud (AWS, GCP, Azure) and your cluster network. This is a minimal, generic Provisioner example you can customize.
+
+```yaml
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: default
+spec:
+  # Cloud-provider specific provider config goes here
+  provider:
+    # Example placeholders; replace with real subnet and SG selectors for your cluster
+    subnetSelector: "karpenter.sh/discovery=default-subnet"
+    securityGroupSelector: "karpenter.sh/discovery=default-sg"
+    # Instance profiles, AMI families, etc., may be required for your cloud
+  requirements:
+    - key: "karpenter.sh/capacity-type"
+      operator: In
+      values: ["on-demand", "spot"]
+  limits:
+    resources:
+      cpu: "1000"    # adjust to your scale
+      memory: "4Ti"
+  ttlSecondsAfterEmpty: 30
+```
+
+- Apply it:
+  - kubectl apply -f provisioner.yaml
+
+> Cloud-provider specifics (subnets, security groups, instance profiles, IAM roles) vary. Refer to the Karpenter docs for your cloud provider and follow the required IAM/Networking steps.
+
+##### 3) Validate Karpenter
+
+- Check the Karpenter pods:
+  - kubectl -n karpenter get pods
+- See nodes being created in response to workload:
+  - kubectl get nodes
+- Check the Provisioner status for any issues:
+  - kubectl describe provisioner default
+- Optional: review Karpenter controller logs:
+  - kubectl logs -n karpenter deploy/karpenter-controller
+
+---
+
+#### Part 2 — ArgoCD: install and configure
+
+Purpose: manage Kubernetes apps from Git in a GitOps manner.
+
+##### 1) Install ArgoCD
+
+```bash
+# Create the namespace and install
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+##### 2) Access ArgoCD
+
+- Port-forward for local access (HTTPS on 443 inside, 8080 on your machine):
+  - kubectl port-forward -n argocd svc/argocd-server 8080:443
+- Get initial admin password:
+  - kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+- Login: username `admin`, password from the secret. You can also set up SSO or other auth methods later.
+
+##### 3) Connect a Git repo and create an Application
+
+- Example Application manifest (points to a repo containing Kubernetes manifests or Helm/ kustomize files):
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/your-org/your-repo'
+    targetRevision: HEAD
+    path: apps/sample
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+```
+
+- Apply:
+  - kubectl apply -f application.yaml -n argocd
+
+- In the UI (or via CLI), verify Application status, and watch automatic syncs if you’ve enabled automated sync.
+
+##### 4) Optional: ArgoCD Projects and RBAC
+
+- Projects help you group Applications and restrict sources/destinations.
+- RBAC policies can limit who can sync what.
+
+---
+
+#### Using Karpenter and ArgoCD together
+
+- Store Provisioner YAMLs in Git and manage them with ArgoCD as code:
+  - Create a separate Application or include Provisioner manifests in your repo.
+  - ArgoCD will apply/update provisioners as part of your GitOps workflow.
+- Benefits:
+  - Repeatable, auditable autoscaler configuration.
+  - All cluster-state changes come from Git, improving traceability.
+
+Guidance:
+- Start with a minimal Provisioner manifest in Git, then expand with constraints (zone/region selectors, instance types, TTLs, capacity types).
+- Consider separating Karpenter-related resources into their own namespace (e.g., karpenter) to keep concerns isolated.
+
+---
+
+#### Validation & quick checks
+
+- Karpenter
+  - Resources: kubectl get nodes, kubectl describe provisioner default
+  - Verify that new nodes appear when there’s unschedulable workload and disappear when idle (TTL after empty)
+- ArgoCD
+  - Access UI, confirm Application status shows Synced/Healthy
+  - Check on Git changes that ArgoCD detects and auto-syncs (if enabled)
+  - Validate that workloads deployed by ArgoCD reflect the apps in Git
+
+---
+
+#### Quick reference commands
+
+- Karpenter install (controller):
+  - kubectl apply -f https://github.com/karpenter/karpenter/releases/latest/download/karpenter.yaml
+- Karpenter Provisioner apply:
+  - kubectl apply -f provisioner.yaml
+- ArgoCD install:
+  - kubectl create namespace argocd
+  - kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+- Access ArgoCD:
+  - kubectl port-forward -n argocd svc/argocd-server 8080:443
+  - Password: fetched from argocd-initial-admin-secret
+- Create an ArgoCD Application:
+  - kubectl apply -f application.yaml -n argocd
+
+---
+
+#### Troubleshooting quick tips
+
+- Karpenter
+  - If no nodes are created, check: Provisioner status, subnet/SG selectors, cloud permissions, and controller logs.
+  - Ensure your workloads have resource requests that trigger provisioning.
+- ArgoCD
+  - If Application stays "OutOfSync," inspect the repo path, targetRevision, and Kubernetes manifests.
+  - If the UI is not reachable, ensure the ArgoCD server service is accessible (Ingress or port-forward).
+
+---
+
+#### References
+
+- Karpenter documentation: https://karpenter.sh
+- ArgoCD documentation: https://argo-cd.readthedocs.io
+- Kubernetes manifests for ArgoCD install: https://github.com/argoproj/argo-cd/tree/stable/manifests
+
+If you want, I can tailor the Provisioner YAML to a specific cloud (AWS, GCP, or Azure) and add a sample Git repository layout for ArgoCD.
 
 ---
 
@@ -499,14 +813,35 @@ Personal reference: notes stored in CloudThat OneNote.
 ---
 
 ## 22. Ansible & Terraform (Stack, Dependencies, Output Variables)
-
-Placeholder for Terraform concepts: managing stack dependencies, using output variables, remote state, and Ansible integration.
+ - https://github.com/kunalshrivastavapune25/aws/blob/main/vpc_cf/terraformVsAWSCf.md
 
 ---
 
 ## 23. AWS Well-Architected Frameworks
 
-Placeholder for review of AWS Well-Architected pillars (Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability).
+### Overview
+A set of best practices for building secure, high-performing, resilient, and efficient cloud infrastructure.
+
+### Six Pillars
+
+| Pillar | Focus |
+|--------|-------|
+| **Operational Excellence** | Run and monitor systems |
+| **Security** | Protect data and systems |
+| **Reliability** | Recover from failures |
+| **Performance Efficiency** | Use resources effectively |
+| **Cost Optimization** | Avoid unnecessary costs |
+| **Sustainability** | Minimize environmental impact |
+
+### Key Benefits
+- ✅ Consistent architecture decisions
+- ✅ Risk identification and mitigation
+- ✅ Improved workload quality
+- ✅ Free review tools available
+
+### Tool
+**AWS Well-Architected Tool** - Free service to review workloads against framework best practices.
+
 
 ---
 
