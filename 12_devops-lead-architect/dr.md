@@ -852,6 +852,59 @@ Common scenarios:
 - S3 cross-account access using IAM roles
 - Cross-account VPC peering / Transit Gateway
 
+#### Introduction
+This tutorial from Knowledge India focuses on enabling cross-account access for an IAM user in one AWS account to access resources in another AWS account. The scenario involves two AWS accounts, referred to as KI-2 (where the user exists) and KI-3 (where access is needed). The user, Gopal, a security auditor in KI-2, requires read-only access to resources in KI-3 without the need to create a new user in that account.
+
+#### Scenario Overview
+- **Accounts**: KI-2 (user's account) and KI-3 (target account).
+- **User**: Gopal needs access to KI-3.
+- **Objective**: Enable Gopal to view resources in KI-3 while restricting another user, Komal, from accessing KI-3.
+
+#### Context
+In large organizations, multiple AWS accounts are common, often organized by department or project. A centralized security team requires the ability to monitor resources across these accounts without managing numerous usernames and passwords.
+
+#### Proposed Solution
+1. **Single User Creation**: Maintain a single IAM user (Gopal) in KI-2.
+2. **Role Creation in KI-3**: Establish an IAM role in KI-3 that Gopal can assume for access.
+3. **Permissions**: Grant Gopal read-only access while restricting Komal's access to KI-3.
+
+#### Steps to Implement Cross-Account Access
+
+##### 1. Create IAM Role in KI-3
+- **Navigate to Roles**: In the KI-3 account, create a new role.
+- **Select Trusted Entity**: Choose "Another AWS Account" and input the KI-2 account ID.
+- **Permissions**: Assign read-only access to the role.
+- **Role Name**: Name the role (e.g., "SecurityReadOnlyRole").
+
+##### 2. Assign Permissions to Gopal in KI-2
+- **User Permissions**: Create a group (e.g., "ReadOnlyGroup") in KI-2 and add Gopal and Komal.
+- **Attach Policies**: Grant read-only permissions to the group.
+
+##### 3. Allow Gopal to Assume the Role
+- **STS Permissions**: Add an inline policy in the group settings that allows Gopal to assume roles in other accounts.
+- **Policy Example**: Use the `sts:AssumeRole` action with a wildcard for the role name.
+
+##### 4. Gopal Switches Role
+- **Switch Role**: Gopal can switch to the KI-3 account using the created role.
+- **Verification**: Confirm that Gopal can view resources in KI-3 (e.g., S3 buckets).
+
+##### 5. Restrict Komal's Access
+- **Role Trust Relationship**: Modify the trust relationship policy in the KI-3 role to specify that only Gopal can assume the role by including only Gopal's IAM user ARN.
+
+#### Steps to Edit Trust Relationship
+1. **Edit Trust Relationship**: Access the role's trust relationship settings.
+2. **Restrict Access to a Specific User**: Specify Gopal's ARN in the trust policy to limit access.
+3. **Update Trust Policy**: Save changes to ensure only Gopal can assume the role.
+
+##### Verification of Trust Relationship
+1. **Switch Role**: After updating the trust policy, Gopal should successfully switch roles.
+2. **Test with Another User**: Attempt to switch roles as Komal, confirming she cannot access the role, thus validating the trust relationship restrictions.
+
+#### Conclusion
+This tutorial effectively demonstrates how to set up cross-account access in AWS, allowing Gopal to view resources in KI-3 while restricting Komal's access. It emphasizes the importance of managing trust relationships to maintain security in organizations with multiple AWS accounts.
+
+For more AWS tutorials, please subscribe to our channel at [youtube.com/knowledgeindia](https://youtube.com/knowledgeindia). Thank you for watching!
+
 ---
 
 ## 25. ITIL 4 & PM – Incident & Problem Management
