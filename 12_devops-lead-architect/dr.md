@@ -217,82 +217,260 @@ Placeholder for notes on AWS RBAC, IAM, and AWS Control Tower.
 
 ---
 
-### 14. kubernetes upgrade
+## 14. kubernetes upgrade
 
 - GitHub: https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/03_IAC/dr%20and%20upgrade.md
 
 
 ---
-## 16. Cost Reduction in Cloud
-```text
-2-Minute Interview Answer: Cloud Cost Optimization
-Opening Statement
-"Cloud cost optimization is critical because while cloud offers scalability and agility, uncontrolled usage can lead to massive bills—sometimes 30-40% of infrastructure spend goes to waste through idle resources, oversized instances, and poor architecture decisions."
 
-7 Practical Techniques I've Used
-1. Right-Sizing Resources
+## 15. rbac  control tower
 
-Use AWS Cost Explorer and Trusted Advisor to identify underutilized EC2 instances
-Example: Downgraded t3.xlarge to t3.large for dev environments, saved 40% monthly
-2. Reserved Instances & Savings Plans
+ - https://www.youtube.com/watch?v=ECTxTONWgw8&t=466s
 
-Analyzed usage patterns and purchased 1-year RIs for predictable workloads
-Achieved 30-50% savings on EC2 and RDS
-3. S3 Lifecycle Policies
+### Authentication and Authorization
+Accessing Kubernetes resources requires both authentication and authorization:
+- **Authentication**: Validates the user’s identity. A successful authentication returns a 200 response, while failure results in a 401 error.
+- **Authorization**: Determines if the authenticated user can perform specific actions (e.g., create, update, delete). If unauthorized, a 403 error is returned.
 
-Implemented automatic tiering: Hot data on S3 Standard, 90-day old to S3-IA, archive to Glacier
-Reduced storage costs by 60%
-4. Auto-Scaling & Spot Instances
+#### Authorization Models
+The primary models for authorization include:
+- Role-Based Access Control (RBAC)
+- Attribute-Based Access Control (ABAC)
+- Node Authorization
 
-Configured EKS cluster with Cluster Autoscaler and Karpenter
-Used Spot instances for non-critical batch jobs—saved 70% on compute
-5. Eliminate Idle Resources
+RBAC is the most widely used model, allowing permissions based on user roles.
 
-Scheduled Lambda functions to stop non-prod EC2/RDS instances after hours
-Deleted unattached EBS volumes and old snapshots
-6. Monitoring & Tagging Strategy
+### Creating a User in Kubernetes
+Kubernetes does not manage users directly; instead, it relies on external identity platforms. The steps to create a user include:
+1. Generate a private key using OpenSSL.
+2. Create a Certificate Signing Request (CSR).
+3. Sign the CSR with a Certificate Authority (CA).
+4. Add the user to the cluster using `kubectl`.
+5. Create a context for the user.
 
-Enforced mandatory cost-center tags for chargeback
-Set up CloudWatch billing alarms and budget alerts
-7. Multi-Account Strategy with AWS Organizations
+#### Example Commands
+```bash
+# Generate private key
+openssl genrsa -out user.key 2048
 
-Consolidated billing and applied volume discounts across accounts
-Two Scenarios
-If Cost Tools Already Exist:
-"I'd start by auditing existing dashboards in Cost Explorer, validate tagging compliance, review historical spending patterns, and prioritize quick wins like orphaned resources before tackling architectural changes."
+# Create CSR
+openssl req -new -key user.key -out user.csr -subj "/CN=Pawan/O=example.org"
 
-If No Cost Governance:
-"First, enable AWS Cost Explorer and Trusted Advisor. Implement a tagging policy immediately, set up budget alerts, and create a weekly cost review meeting with stakeholders. Start with low-hanging fruit: stop unused resources, then move to reserved capacity planning."
+# Sign the CSR
+openssl x509 -req -in user.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out user.crt -days 365
 
-Real-World Example
-"At my previous company, our monthly AWS bill was 180K. I implemented EKS right-sizing, moved 40% workloads to Spot, applied S3 lifecycle policies, and purchased RIs. Within 3 months, we reduced costs to 110K—38% savings—without impacting performance."
+# Add user to cluster
+kubectl config set-credentials Pawan --client-certificate=user.crt --client-key=user.key
 
-How Agentic AI Can Help
-Modern Approach with AI: "Agentic AI systems can revolutionize cost optimization through autonomous decision-making. Using frameworks like LangChain, AutoGPT, or AWS Bedrock Agents, we can build intelligent agents that:
-
-Continuously analyze Cost Explorer APIs and recommend optimizations in real-time
-Use Model Context Protocol (MCP) to connect multiple data sources—billing, CloudWatch metrics, application logs
-Automatically execute approved actions like scheduling shutdowns, modifying auto-scaling policies, or purchasing RIs
-Predict future costs using machine learning on usage patterns
-Chat-based interfaces where teams can ask 'Why did costs spike yesterday?' and get root-cause analysis instantly
-For example, an AI agent built with LangGraph can create multi-step workflows: detect anomaly → analyze root cause → propose solution → get approval → execute—all while learning from past decisions. This shifts from reactive monthly reviews to proactive, real-time cost governance."
-
-Total speaking time: ~2 minutes
-
-This answer demonstrates technical depth, practical experience, business impact, and awareness of cutting-edge AI solutions—exactly what senior architect interviews look for.
-
+# Create context
+kubectl config set-context Pawan-context --cluster=minikube --user=Pawan --namespace=default
 ```
+
+### Role and Role Binding
+To grant permissions, roles and role bindings are created:
+- **Role**: Defines permissions for a specific namespace.
+- **Role Binding**: Connects a user to a role.
+
+#### Example Role and Role Binding
+```yaml
+# Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+# Role Binding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: User
+  name: Pawan
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+#### Applying the Role and Role Binding
+```bash
+kubectl apply -f role.yaml
+kubectl apply -f rolebinding.yaml
+```
+
+### Cluster Roles and Cluster Role Bindings
+For broader access across namespaces, cluster roles and bindings are used:
+- **Cluster Role**: Similar to a role but applies at the cluster level.
+- **Cluster Role Binding**: Connects a user to a cluster role.
+
+#### Example Cluster Role and Binding
+```yaml
+# Cluster Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+# Cluster Role Binding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: read-pods
+subjects:
+- kind: User
+  name: Pawan
+roleRef:
+  kind: ClusterRole
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+#### Applying the Cluster Role and Binding
+```bash
+kubectl apply -f clusterrole.yaml
+kubectl apply -f clusterrolebinding.yaml
+```
+
+### Service Accounts
+Service accounts are special users created in each namespace for applications to access Kubernetes resources.
+
+#### Creating a Service Account
+```bash
+kubectl create serviceaccount my-service-account
+```
+
+#### Using a Service Account in a Pod
+Specify the service account in the pod definition:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  serviceAccountName: my-service-account
+  containers:
+  - name: my-container
+    image: my-image
+```
+
+### Conclusion
+This chapter covered managing access to Kubernetes resources using RBAC, including user creation, roles, role bindings, cluster roles, and service accounts. As a practical exercise, users are encouraged to create multiple users, attach them to groups, and test their access to resources. 
+
+#### Summary of Kubernetes Service Account Permissions
+1. **Context Update**: Applied `kubectl` commands to update role bindings.
+2. **Listing Pods**: Verified pod listing using the service account.
+3. **Testing Permissions**: Used `kubectl auth can-i create pods` to check permissions.
+4. **Impersonating Service Account**: Tested permissions for a specific service account.
+5. **Checking Pod Access**: Confirmed retrieval of pods using the service account.
 
 ---
 
-## 17. Blue Green and Canary Deployment in EKS
+## 16. cost reduction in cloud
+### Compute
+- Rightsize with AWS Compute Optimizer; switch to Graviton3 where suitable.
+- Savings Plans (Compute) and Reserved Instances for steady workloads.
+- Use Spot Instances with robust Auto Scaling or Spot Fleet.
+- Leverage EC2 Hibernate where supported; schedule on/off for non-prod.
 
- - https://www.youtube.com/watch?v=0QhUhrWGB9k
- - Deployment strategies in Kubernetes, including Rolling Update, Canary, and Blue-Green, are essential for maintaining application availability and user experience during upgrades. Each strategy has distinct advantages and use cases. Rolling Updates allow for zero-downtime upgrades but can be complex. Canary Deployments enable gradual rollouts with real-time feedback, reducing risk. Blue-Green Deployments provide a safe rollback mechanism but are resource-intensive. Understanding these strategies is crucial for effective application deployment in Kubernetes environments, especially for technical professionals in software development and operations.
- - 
-<img width="956" height="562" alt="image" src="https://github.com/user-attachments/assets/de127819-7ddd-4ebf-9876-e9f445ef2347" />
+### Storage and Data Management
+- S3: enable Lifecycle policies and move infrequently accessed data to Intelligent-Tiering/Glacier.
+- Rightsize EBS volumes; delete unattached volumes; keep snapshots lean.
+- Minimize data transfer: keep resources in same region, use VPC endpoints, and CloudFront for egress.
 
-<img width="1132" height="811" alt="image" src="https://github.com/user-attachments/assets/50c2eee8-5936-455f-b47b-d25d3db5bef7" />
+### Databases and Serverless
+- Aurora Serverless v2 or provisioned with autoscaling; DynamoDB on-demand vs provisioned with auto-scaling.
+- Choose managed serverless where workloads are irregular; enable automatic backups with lifecycle rules.
+
+### Networking and Operations
+- Use CloudFront and caching to reduce origin load; minimize cross-region transfers.
+- Implement budgets, alerts, and cost reporting with Cost Explorer and Trusted Advisor checks.
+
+### Governance and Automation
+- Tagging strategy for cost allocation; enforce via automation.
+- Regular automated cost-optimization checks (Compute Optimizer, anomaly detection) with alerts.
+
+### Agentic AI for Cost Optimization (Autonomous Cost Agents)
+- Concept: AI agents that monitor usage and costs and take safe, policy-driven actions.
+- How it works:
+  - Data sources: Cost Explorer API, CloudWatch metrics, Compute Optimizer, Trusted Advisor.
+  - Orchestrator: AWS Step Functions or Lambda + Systems Manager Automation for action workflows.
+  - Actions (with safeguards): auto-suspend idle dev/test resources on off-hours; auto-rightsize workloads with guardrails; propose or auto-commit to Savings Plans for predictable workloads under governance.
+- Implementation tips:
+  - Start with non-prod environments: schedule idle shutdowns and rightsizing recommendations.
+  - Use least-privilege IAM roles, approval gates, and full audit logs.
+  - Deploy in small, testable loops; monitor results before broader rollout.
+
+Notes
+- Always test changes in a staging environment.
+- Revisit every 3-6 months as AWS introduces new cost-saving options.
+
+---
+
+## 17. blue green and canary deployment in eks
+
+**What is a Deployment Strategy?**
+A deployment strategy is essential for managing application updates in Kubernetes. Many users mistakenly think they can simply uninstall an old version and install a new one, which can lead to significant downtime. This is particularly detrimental for organizations like Amazon or Instagram, where even a few minutes of downtime can result in revenue loss and a poor user experience.
+
+---
+
+**Why Use a Deployment Strategy?**
+1. **Minimize Downtime**: Without a deployment strategy, switching versions can lead to service outages. For instance, if it takes 10 minutes to switch versions, your service is down for that duration.
+   
+2. **User Experience**: Downtime can frustrate users and damage an organization's reputation. A deployment strategy helps mitigate these risks.
+
+---
+
+**Overview of Deployment Strategies**
+
+1. **Rolling Update**:
+   - **Definition**: The default deployment strategy in Kubernetes, which gradually replaces instances of the old version with the new one.
+   - **How It Works**: For example, if you have four replicas of an application, Kubernetes will incrementally replace them, ensuring that some instances of the old version remain available to handle traffic.
+   - **Configuration**: Utilizes two parameters:
+     - **Max Unavailable**: The maximum number of replicas that can be unavailable during the update (default is 25%).
+     - **Max Surge**: The maximum number of replicas that can be created above the desired number (default is also 25%).
+   - **Readiness Probe**: Essential for ensuring that traffic is only routed to healthy instances.
+
+2. **Canary Deployment**:
+   - **Definition**: Allows testing a new version of an application in production with a small subset of users before a full rollout.
+   - **Implementation**: For example, route 90% of traffic to the old version and 10% to the new version.
+   - **Advantages**: Reduces risk by limiting the number of affected users if issues arise, allows for extended testing, and enables easy rollback.
+
+3. **Blue-Green Deployment**:
+   - **Definition**: Involves maintaining two identical environments (Blue and Green), where one serves live traffic while the other is idle or used for staging the new version.
+   - **Benefits**: Traffic can be switched from the old environment to the new one with minimal downtime.
+   - **Challenges**: This approach can be costly due to the resource consumption of maintaining identical replicas for both versions.
+
+---
+
+**Comparison of Deployment Strategies**
+- **Canary vs. Rolling Update**: 
+  - **Canary Deployment** is preferred for high-stakes applications where user experience is critical, allowing for gradual testing and easy rollback.
+  - **Rolling Update** is suitable for simpler applications where some downtime is acceptable and rapid deployment is necessary.
+
+- **Blue-Green Deployment**: While effective for industries like banking where immediate rollback capabilities are critical, it can be resource-intensive, making it less attractive for other sectors.
+
+---
+
+**Load Balancer Configuration**
+To implement a new version, update the Ingress resource to point the load balancer from Service One to Service Two. If issues arise, simply revert the configuration back to Service One for a quick rollback.
+
+---
+
+**Conclusion**
+In summary, using a deployment strategy in Kubernetes is essential for minimizing downtime and ensuring a smooth user experience during application updates. Each strategy—Rolling Update, Canary, and Blue-Green—has its unique advantages and use cases. Understanding these strategies will help you effectively manage application deployments in your Kubernetes environment. Thank you for watching, and see you in the next video!
+
 
 ---
 
