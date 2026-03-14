@@ -608,9 +608,99 @@ This chapter covered managing access to Kubernetes resources using RBAC, includi
 
 
 ## 14. cost reduction in cloud
+### Compute
+- Rightsize with AWS Compute Optimizer; switch to Graviton3 where suitable.
+- Savings Plans (Compute) and Reserved Instances for steady workloads.
+- Use Spot Instances with robust Auto Scaling or Spot Fleet.
+- Leverage EC2 Hibernate where supported; schedule on/off for non-prod.
+
+### Storage and Data Management
+- S3: enable Lifecycle policies and move infrequently accessed data to Intelligent-Tiering/Glacier.
+- Rightsize EBS volumes; delete unattached volumes; keep snapshots lean.
+- Minimize data transfer: keep resources in same region, use VPC endpoints, and CloudFront for egress.
+
+### Databases and Serverless
+- Aurora Serverless v2 or provisioned with autoscaling; DynamoDB on-demand vs provisioned with auto-scaling.
+- Choose managed serverless where workloads are irregular; enable automatic backups with lifecycle rules.
+
+### Networking and Operations
+- Use CloudFront and caching to reduce origin load; minimize cross-region transfers.
+- Implement budgets, alerts, and cost reporting with Cost Explorer and Trusted Advisor checks.
+
+### Governance and Automation
+- Tagging strategy for cost allocation; enforce via automation.
+- Regular automated cost-optimization checks (Compute Optimizer, anomaly detection) with alerts.
+
+### Agentic AI for Cost Optimization (Autonomous Cost Agents)
+- Concept: AI agents that monitor usage and costs and take safe, policy-driven actions.
+- How it works:
+  - Data sources: Cost Explorer API, CloudWatch metrics, Compute Optimizer, Trusted Advisor.
+  - Orchestrator: AWS Step Functions or Lambda + Systems Manager Automation for action workflows.
+  - Actions (with safeguards): auto-suspend idle dev/test resources on off-hours; auto-rightsize workloads with guardrails; propose or auto-commit to Savings Plans for predictable workloads under governance.
+- Implementation tips:
+  - Start with non-prod environments: schedule idle shutdowns and rightsizing recommendations.
+  - Use least-privilege IAM roles, approval gates, and full audit logs.
+  - Deploy in small, testable loops; monitor results before broader rollout.
+
+Notes
+- Always test changes in a staging environment.
+- Revisit every 3-6 months as AWS introduces new cost-saving options.
+
 ## 15. blue green and canary deployment in eks
+
+**What is a Deployment Strategy?**
+A deployment strategy is essential for managing application updates in Kubernetes. Many users mistakenly think they can simply uninstall an old version and install a new one, which can lead to significant downtime. This is particularly detrimental for organizations like Amazon or Instagram, where even a few minutes of downtime can result in revenue loss and a poor user experience.
+
+---
+
+**Why Use a Deployment Strategy?**
+1. **Minimize Downtime**: Without a deployment strategy, switching versions can lead to service outages. For instance, if it takes 10 minutes to switch versions, your service is down for that duration.
+   
+2. **User Experience**: Downtime can frustrate users and damage an organization's reputation. A deployment strategy helps mitigate these risks.
+
+---
+
+**Overview of Deployment Strategies**
+
+1. **Rolling Update**:
+   - **Definition**: The default deployment strategy in Kubernetes, which gradually replaces instances of the old version with the new one.
+   - **How It Works**: For example, if you have four replicas of an application, Kubernetes will incrementally replace them, ensuring that some instances of the old version remain available to handle traffic.
+   - **Configuration**: Utilizes two parameters:
+     - **Max Unavailable**: The maximum number of replicas that can be unavailable during the update (default is 25%).
+     - **Max Surge**: The maximum number of replicas that can be created above the desired number (default is also 25%).
+   - **Readiness Probe**: Essential for ensuring that traffic is only routed to healthy instances.
+
+2. **Canary Deployment**:
+   - **Definition**: Allows testing a new version of an application in production with a small subset of users before a full rollout.
+   - **Implementation**: For example, route 90% of traffic to the old version and 10% to the new version.
+   - **Advantages**: Reduces risk by limiting the number of affected users if issues arise, allows for extended testing, and enables easy rollback.
+
+3. **Blue-Green Deployment**:
+   - **Definition**: Involves maintaining two identical environments (Blue and Green), where one serves live traffic while the other is idle or used for staging the new version.
+   - **Benefits**: Traffic can be switched from the old environment to the new one with minimal downtime.
+   - **Challenges**: This approach can be costly due to the resource consumption of maintaining identical replicas for both versions.
+
+---
+
+**Comparison of Deployment Strategies**
+- **Canary vs. Rolling Update**: 
+  - **Canary Deployment** is preferred for high-stakes applications where user experience is critical, allowing for gradual testing and easy rollback.
+  - **Rolling Update** is suitable for simpler applications where some downtime is acceptable and rapid deployment is necessary.
+
+- **Blue-Green Deployment**: While effective for industries like banking where immediate rollback capabilities are critical, it can be resource-intensive, making it less attractive for other sectors.
+
+---
+
+**Load Balancer Configuration**
+To implement a new version, update the Ingress resource to point the load balancer from Service One to Service Two. If issues arise, simply revert the configuration back to Service One for a quick rollback.
+
+---
+
+**Conclusion**
+In summary, using a deployment strategy in Kubernetes is essential for minimizing downtime and ensuring a smooth user experience during application updates. Each strategy—Rolling Update, Canary, and Blue-Green—has its unique advantages and use cases. Understanding these strategies will help you effectively manage application deployments in your Kubernetes environment. Thank you for watching, and see you in the next video!
+
 ## 16. security and code quality
-## 17. carpenter and argocd 
+## 17. Karpenter and Argocd 
 ## 18. agentic ai devops 
 ## 19. check cloudthat onenote
 ## 20. anisible terraform (stack and depenency output variables in terraform)
