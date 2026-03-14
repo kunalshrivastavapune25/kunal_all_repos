@@ -803,6 +803,50 @@ If you want, I can tailor the Provisioner YAML to a specific cloud (AWS, GCP, or
 ## 20. Agentic AI DevOps
 
 Placeholder for exploring AI-driven incident management, automated Jira ticket creation via MCPS, and integration with PagerDuty.
+#### What is PagerDuty?
+PagerDuty is a widely-used incident management platform in the DevOps community that automates incident management processes, enabling teams to respond to and resolve issues efficiently.
+
+#### Key Topics Covered
+
+##### 1. Incident Management Overview
+- **Definition**: Incident management involves identifying, resolving, and analyzing incidents.
+- **Challenges**: Manual incident management can be cumbersome, particularly in high-pressure situations.
+
+##### 2. PagerDuty's Features
+- **End-to-End Incident Management**: PagerDuty has recently rolled out end-to-end incident management across all plans, including Professional and Business plans.
+  
+###### Professional Plan Features:
+- Configure incident response workflows.
+- Integrate with Slack and Jira for automation.
+- Set up external status pages for up to 250 subscribers.
+- AI-powered incident summarization.
+- 1,000 advanced credits and two dedicated teams for security incidents.
+
+###### Business Plan Features:
+- Access to status pages for up to 500 subscribers.
+- Custom roles and incident types.
+- Enhanced incident workflow triggers.
+
+#### Why is Incident Management Important?
+Effective incident management is crucial, as illustrated by a scenario where a tech company's payment service experiences issues. A drop in successful HTTP requests below 99% can halt transactions, negatively impacting sales and customer satisfaction.
+
+#### Manual Incident Management Challenges
+In a manual setup, incident managers must gather information, create tickets, and coordinate with various stakeholders, often leading to delays and inefficiencies, especially during off-hours.
+
+#### How PagerDuty Simplifies Incident Management
+1. **Integration with Monitoring Tools**: For example, integrating Grafana with PagerDuty allows for automatic alerts when issues arise.
+2. **Slack Integration**: PagerDuty’s Slack bot facilitates communication, enabling teams to acknowledge incidents, share information, and collaborate effectively.
+3. **Incident Workflow Automation**: Teams can define specific workflows based on incident priority (e.g., P1 or P2), streamlining the response process.
+
+#### Guided Demo Overview
+In the guided demo, we will:
+- Set up a Slack channel for incident communication.
+- Acknowledge and define an incident.
+- Use PagerDuty to gather relevant information and facilitate collaboration among team members.
+- Resolve the incident and conduct a post-incident review.
+
+#### Conclusion
+PagerDuty enhances incident management by automating processes, improving communication, and enabling faster resolutions. I encourage you to try out the guided demo linked in the description and pinned comment. If you have any questions, feel free to ask in the comments. Thank you for watching, and see you in the next video! Take care!
 
 ---
 
