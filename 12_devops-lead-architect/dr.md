@@ -1,3 +1,5 @@
+
+
 # Interview Preparation Notes – DevOps / Platform Engineering
 
 This repository contains my personal notes, talking points, and resources for preparing for a senior DevOps / Platform Engineering interview (focus on microservices migration, GitOps, Kubernetes, and AWS EKS). The content is organized for quick revision and includes real-world challenges, solutions, best practices, and references to courses, projects, and documentation.
