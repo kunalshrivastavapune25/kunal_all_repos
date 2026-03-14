@@ -11,3 +11,6 @@ This 3-tier architecture is the gold standard for a reason. Here’s a quick bre
 While this setup is robust, don’t forget to automate the scaling! If your Auto Scaling Groups aren’t tuned correctly, you’re either overpaying or underperforming.
 
 What’s one thing you would add to this diagram? Multi-region failover? Or maybe a service mesh? Let’s discuss! 👇
+
+
+- https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/1771921124437.jpg
