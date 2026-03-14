@@ -846,7 +846,7 @@ A set of best practices for building secure, high-performing, resilient, and eff
 ---
 
 ## 24. AWS Cross-Account Questions
-
+ - https://www.youtube.com/watch?v=n1r9Fp7GKvk
 Common scenarios:
 - EC2 in Account A accessing EC2 in Account B
 - S3 cross-account access using IAM roles
