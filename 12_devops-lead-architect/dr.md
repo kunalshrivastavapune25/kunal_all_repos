@@ -943,31 +943,28 @@ For more AWS tutorials, please subscribe to our channel at [youtube.com/knowledg
 
 ## 25. ITIL 4 & PM – Incident & Problem Management
 
-Placeholder for notes on ITIL 4 practices for incident, problem, and change management, aligned with project management (PM) best practices.
-
+ - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 ---
 
 ## 26. ITIL 4 & PM – Costing and Resourcing
 
-Placeholder for notes on financial management, cost allocation, and resource planning in ITIL 4 context.
-
+ - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 ---
 
 ## 27. DevOps Management
 
-Placeholder for notes on leading DevOps teams, culture, metrics (DORA), and continuous improvement.
-
+ - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 ---
 
 ## 28. Lead Roles
 
-Placeholder for responsibilities and expectations of a DevOps Lead / Tech Lead role.
+ - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 
 ---
 
 ## 29. Major Incident in Production
 
-Placeholder for handling major incidents: communication, root cause analysis, blameless postmortems, and preventive measures.
+ - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 
 ---
 
