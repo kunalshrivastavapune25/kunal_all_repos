@@ -453,7 +453,155 @@ Fast RTO: Once traffic is redirected, applications in the DR region are already 
 
 	Upgrading Kubernetes clusters is a critical task for maintaining system integrity and performance. The process involves careful preparation, including reviewing release notes, ensuring version compatibility, and testing in lower environments. The upgrade process consists of three main steps: upgrading the control plane, upgrading node groups, and upgrading add-ons. Utilizing rolling updates can help achieve zero downtime. Understanding the nuances of the upgrade process, including managing custom nodes and add-ons, is essential for DevOps and Cloud Engineers. Following the outlined steps and prerequisites will facilitate a smoother upgrade experience, making this knowledge valuable for technical professionals and interviews. Additional resources, such as AWS documentation, are available for further guidance.
 ```
-## 5. rbac  control tower  
+## 5. rbac  control tower
+ - https://www.youtube.com/watch?v=ECTxTONWgw8&t=466s
+### Authentication and Authorization
+Accessing Kubernetes resources requires both authentication and authorization:
+- **Authentication**: Validates the user’s identity. A successful authentication returns a 200 response, while failure results in a 401 error.
+- **Authorization**: Determines if the authenticated user can perform specific actions (e.g., create, update, delete). If unauthorized, a 403 error is returned.
+
+#### Authorization Models
+The primary models for authorization include:
+- Role-Based Access Control (RBAC)
+- Attribute-Based Access Control (ABAC)
+- Node Authorization
+
+RBAC is the most widely used model, allowing permissions based on user roles.
+
+### Creating a User in Kubernetes
+Kubernetes does not manage users directly; instead, it relies on external identity platforms. The steps to create a user include:
+1. Generate a private key using OpenSSL.
+2. Create a Certificate Signing Request (CSR).
+3. Sign the CSR with a Certificate Authority (CA).
+4. Add the user to the cluster using `kubectl`.
+5. Create a context for the user.
+
+#### Example Commands
+```bash
+# Generate private key
+openssl genrsa -out user.key 2048
+
+# Create CSR
+openssl req -new -key user.key -out user.csr -subj "/CN=Pawan/O=example.org"
+
+# Sign the CSR
+openssl x509 -req -in user.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out user.crt -days 365
+
+# Add user to cluster
+kubectl config set-credentials Pawan --client-certificate=user.crt --client-key=user.key
+
+# Create context
+kubectl config set-context Pawan-context --cluster=minikube --user=Pawan --namespace=default
+```
+
+### Role and Role Binding
+To grant permissions, roles and role bindings are created:
+- **Role**: Defines permissions for a specific namespace.
+- **Role Binding**: Connects a user to a role.
+
+#### Example Role and Role Binding
+```yaml
+# Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+# Role Binding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: User
+  name: Pawan
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+#### Applying the Role and Role Binding
+```bash
+kubectl apply -f role.yaml
+kubectl apply -f rolebinding.yaml
+```
+
+### Cluster Roles and Cluster Role Bindings
+For broader access across namespaces, cluster roles and bindings are used:
+- **Cluster Role**: Similar to a role but applies at the cluster level.
+- **Cluster Role Binding**: Connects a user to a cluster role.
+
+#### Example Cluster Role and Binding
+```yaml
+# Cluster Role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+# Cluster Role Binding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: read-pods
+subjects:
+- kind: User
+  name: Pawan
+roleRef:
+  kind: ClusterRole
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+#### Applying the Cluster Role and Binding
+```bash
+kubectl apply -f clusterrole.yaml
+kubectl apply -f clusterrolebinding.yaml
+```
+
+### Service Accounts
+Service accounts are special users created in each namespace for applications to access Kubernetes resources.
+
+#### Creating a Service Account
+```bash
+kubectl create serviceaccount my-service-account
+```
+
+#### Using a Service Account in a Pod
+Specify the service account in the pod definition:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  serviceAccountName: my-service-account
+  containers:
+  - name: my-container
+    image: my-image
+```
+
+### Conclusion
+This chapter covered managing access to Kubernetes resources using RBAC, including user creation, roles, role bindings, cluster roles, and service accounts. As a practical exercise, users are encouraged to create multiple users, attach them to groups, and test their access to resources. 
+
+#### Summary of Kubernetes Service Account Permissions
+1. **Context Update**: Applied `kubectl` commands to update role bindings.
+2. **Listing Pods**: Verified pod listing using the service account.
+3. **Testing Permissions**: Used `kubectl auth can-i create pods` to check permissions.
+4. **Impersonating Service Account**: Tested permissions for a specific service account.
+5. **Checking Pod Access**: Confirmed retrieval of pods using the service account.
+
 
 ## 14. cost reduction in cloud
 ## 15. blue green and canary deployment in eks
