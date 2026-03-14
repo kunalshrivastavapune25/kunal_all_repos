@@ -453,8 +453,12 @@ Fast RTO: Once traffic is redirected, applications in the DR region are already 
 
 	Upgrading Kubernetes clusters is a critical task for maintaining system integrity and performance. The process involves careful preparation, including reviewing release notes, ensuring version compatibility, and testing in lower environments. The upgrade process consists of three main steps: upgrading the control plane, upgrading node groups, and upgrading add-ons. Utilizing rolling updates can help achieve zero downtime. Understanding the nuances of the upgrade process, including managing custom nodes and add-ons, is essential for DevOps and Cloud Engineers. Following the outlined steps and prerequisites will facilitate a smoother upgrade experience, making this knowledge valuable for technical professionals and interviews. Additional resources, such as AWS documentation, are available for further guidance.
 ```
+
+
 ## 5. rbac  control tower
+
  - https://www.youtube.com/watch?v=ECTxTONWgw8&t=466s
+
 ### Authentication and Authorization
 Accessing Kubernetes resources requires both authentication and authorization:
 - **Authentication**: Validates the user’s identity. A successful authentication returns a 200 response, while failure results in a 401 error.
