@@ -404,7 +404,7 @@ Fast RTO: Once traffic is redirected, applications in the DR region are already 
 ```
 
 ## 14. kubernetes upgrade
-	```text
+```bash
 	https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html
 	https://www.youtube.com/watch?v=Cfznp8jRh7I&t=5s
 	Regular upgrades are necessary due to the frequent release of new Kubernetes versions (every three months).
