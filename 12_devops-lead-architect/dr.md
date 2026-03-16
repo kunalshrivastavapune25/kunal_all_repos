@@ -195,7 +195,7 @@ Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwri
 - [Ultimate DevOps Project with Resume Preparation](https://tcsglobal.udemy.com/course/ultimate-devops-project-with-resume-preparation/learn/lecture/48207855?start=15#overview)
 - GitHub: [ultimate-devops-project-demo](https://github.com/iam-veeramalla/ultimate-devops-project-demo)
 - GitHub: [ultimate-devops-project-aws](https://github.com/iam-veeramalla/ultimate-devops-project-aws)
-
+- https://github.com/kunalshrivastavapune25/aws-eks-kubernetes-masterclass/tree/master/11-NEW-DevOps-with-AWS-Developer-Tools-and-GitHub
 ---
 
 ## 11. Aman Pathak Tetris Project
