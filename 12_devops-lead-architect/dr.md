@@ -202,7 +202,8 @@ Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwri
 
 - GitHub: [End-to-End Kubernetes DevSecOps Tetris Project](https://github.com/AmanPathak-DevOps/End-to-End-Kubernetes-DevSecOps-Tetris-Project/tree/master)
 - Blog: [DevSecOps Mastery – Deploy Tetris on EKS with Jenkins & ArgoCD](https://blog.stackademic.com/devsecops-mastery-a-step-by-step-guide-to-deploying-tetris-on-aws-eks-with-jenkins-and-argocd-3adcf21b3120)
-
+- developer makes dockerfile using docker build command , then we test it by making container of same by docker deploy and in jenkins pipeline we have have docker buuild code that makes the image deploys and 
+- test it then it going to push same to ecr then we update that image to deployment.yml, inside manifest folder then argocd will sync same to prod env, this image is also goes though sonarqube, owasp and trivy
 ---
 
 ## 12. SonarQube – 70% Passing
