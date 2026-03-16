@@ -38,6 +38,8 @@ This repository contains my personal notes, talking points, and resources for pr
 - [28. Lead Roles](#28-lead-roles)
 - [29. Major Incident in Production](#29-major-incident-in-production)
 - [30. How to Create a Helm Chart](#30-how-to-create-a-helm-chart)
+- [31. AWS Organization , control towers landing zones](31. AWS Organization , control towers landing zones)
+- [32. Migration](#32-Migration)
 
 ---
 
@@ -1012,7 +1014,47 @@ For more AWS tutorials, please subscribe to our channel at [youtube.com/knowledg
 ## 29. Major Incident in Production
 
  - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
+Interview Scenario
 
+Production API latency suddenly increased.
+
+Incident Response Steps
+
+1️⃣ Identify impact
+
+Which service affected?
+
+2️⃣ Check monitoring
+
+CloudWatch
+
+Prometheus
+
+3️⃣ Check infrastructure
+
+Load balancer health
+
+Auto scaling
+
+4️⃣ Check database
+
+Slow queries
+
+CPU spikes
+
+5️⃣ Check recent deployments
+
+Rollback if needed
+
+6️⃣ Mitigation
+
+Scale infrastructure
+
+7️⃣ Postmortem
+
+Root cause analysis
+
+Prevention plan
 ---
 
 ## 30. How to Create a Helm Chart
@@ -1061,6 +1103,12 @@ For more AWS tutorials, please subscribe to our channel at [youtube.com/knowledg
 - After deploying to production using the `prod.yaml` file and the `prod` namespace, you can view all releases with `helm ls --all-namespaces`.
 - Verify resources in each environment using `kubectl get all -n dev` for development and `kubectl get all -n prod` for production.
 - Access the web application to check custom headers for both environments, confirming functionality.
+---
+
+## 31. AWS Organization , control towers landing zones---
+
+## 32. Migration
+
 
 By the end of this tutorial, you will have the skills to effectively customize and deploy Kubernetes applications using Helm, making it a valuable resource for job seekers and personal projects. For further learning, check the video description for additional resources and links to related content. Thank you for watching!
 
