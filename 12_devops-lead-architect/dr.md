@@ -38,7 +38,7 @@ This repository contains my personal notes, talking points, and resources for pr
 - [28. Lead Roles](#28-lead-roles)
 - [29. Major Incident in Production](#29-major-incident-in-production)
 - [30. How to Create a Helm Chart](#30-how-to-create-a-helm-chart)
-- [31. AWS Organization , control towers landing zones](31. AWS Organization , control towers landing zones)
+- [31. AWS Organization , control towers landing zones](31-AWS-Organization-control-towers-landing-zones)
 - [32. Migration](#32-Migration)
 
 ---
