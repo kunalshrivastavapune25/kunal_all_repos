@@ -58,7 +58,8 @@ This repository contains my personal notes, talking points, and resources for pr
   - **Orchestration** (Kubernetes – EKS)  
   - **CI/CD + GitOps** (GitHub Actions + ArgoCD)  
   - **Infrastructure as Code** (Terraform, Ansible)
-
+- Day to day work:
+  - MLOPS -- Build Training data, obsevablity, cicd, madel registry, iac, cost 
 ---
 
 ## 2. Best Practices & Daily / Weekly Work
