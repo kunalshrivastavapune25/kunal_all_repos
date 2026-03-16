@@ -40,7 +40,7 @@ This repository contains my personal notes, talking points, and resources for pr
 - [30. How to Create a Helm Chart](#30-how-to-create-a-helm-chart)
 - [31. AWS Organization , control towers landing zones](31-AWS-Organization-control-towers-landing-zones)
 - [32. Migration](#32-Migration)
-
+- [33. HIGHAVAILABLE](#33-HIGHAVAILABLE)
 ---
 
 ## 1. Introduction / About Myself
@@ -1105,10 +1105,12 @@ Prevention plan
 - Access the web application to check custom headers for both environments, confirming functionality.
 ---
 
-## 31. AWS Organization , control towers landing zones---
+## 31. AWS Organization , control towers landing zones
 
 ## 32. Migration
 
+## 33. HIGHAVAILABLE
+ - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/1771921124437.jpg
 
 By the end of this tutorial, you will have the skills to effectively customize and deploy Kubernetes applications using Helm, making it a valuable resource for job seekers and personal projects. For further learning, check the video description for additional resources and links to related content. Thank you for watching!
 
