@@ -214,7 +214,8 @@ Aim to achieve at least 70% quality gate passing in SonarQube scans.
 
 ## 13. RBAC / Control Tower
 
-Placeholder for notes on AWS RBAC, IAM, and AWS Control Tower.
+Placeholder for notes on AWS RBAC, IAM, and AWS Control Tower , landing zone and organisations, cross account access and shared accounts,
+additionally study about k8s rbac, role, role binding , users, service account 
 
 ---
 ## 13 EKS Disaster Recovery (DR) – Comprehensive Interview Guide
