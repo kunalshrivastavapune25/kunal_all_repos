@@ -230,7 +230,7 @@ Placeholder for notes on AWS RBAC, IAM, and AWS Control Tower.
 
 ---
 
-## 15. rbac  control tower
+## 15. rbac  control tower landing zone organization role binding service account
 
  - https://www.youtube.com/watch?v=ECTxTONWgw8&t=466s
 
