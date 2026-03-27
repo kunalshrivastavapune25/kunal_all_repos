@@ -181,7 +181,7 @@ Minimize direct cluster changes → maximize **traceability, auditability & secu
 - https://www.youtube.com/watch?v=uBhjymTV0ro&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=5
 - https://www.youtube.com/watch?v=qvBHvD4oXMc&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=6
 <img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/d99122d8-3bf3-45e6-b3be-77e4f4eb7705" />
-<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/accc361f-cf8e-4e40-b44b-b0e0ceffbee7" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/accc361f-cf8e-4e40-b44b-b0e0ceffbee7" />
 <img width="800" height="1075" alt="image" src="https://github.com/user-attachments/assets/6a1241c4-6ae4-4f9d-800f-f33d89f9f10b" />
 <img width="800" height="1161" alt="image" src="https://github.com/user-attachments/assets/12ba0c4e-cfc3-4f98-84dc-c8e06d579107" />
 
