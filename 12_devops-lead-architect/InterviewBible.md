@@ -521,7 +521,7 @@ In summary, using a deployment strategy in Kubernetes is essential for minimizin
 #### Overview
 - Goal: integrate security into every stage of the CI/CD lifecycle for Kubernetes workloads on EKS.
 - Key enablers: identity with IRSA, image provenance, runtime security, policy-as-code, and end-to-end observability.
-<img width="789" height="983" alt="image" src="https://github.com/user-attachments/assets/6e381747-08c9-4d79-9aa9-7331d70307be" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/6e381747-08c9-4d79-9aa9-7331d70307be" />
 
 #### Core Principles
 - Shift-left security: scan and vet artifacts early.
