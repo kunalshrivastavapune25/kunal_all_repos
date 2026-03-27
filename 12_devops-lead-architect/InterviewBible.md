@@ -182,8 +182,8 @@ Minimize direct cluster changes → maximize **traceability, auditability & secu
 - https://www.youtube.com/watch?v=qvBHvD4oXMc&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=6
 <img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/d99122d8-3bf3-45e6-b3be-77e4f4eb7705" />
 <img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/accc361f-cf8e-4e40-b44b-b0e0ceffbee7" />
-<img width="800" height="1075" alt="image" src="https://github.com/user-attachments/assets/6a1241c4-6ae4-4f9d-800f-f33d89f9f10b" />
-<img width="800" height="1161" alt="image" src="https://github.com/user-attachments/assets/12ba0c4e-cfc3-4f98-84dc-c8e06d579107" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/6a1241c4-6ae4-4f9d-800f-f33d89f9f10b" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/12ba0c4e-cfc3-4f98-84dc-c8e06d579107" />
 
 
 - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/08_containerization/k8stroubleshooting.md
@@ -193,15 +193,15 @@ Minimize direct cluster changes → maximize **traceability, auditability & secu
 
 Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwritten Kubernetes/DevOps notes.
 
-<img width="800" height="1200" alt="image" src="https://github.com/user-attachments/assets/19ba6138-9385-4b5f-a46d-65fbdde15b3d" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/19ba6138-9385-4b5f-a46d-65fbdde15b3d" />
 
-<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/563d1b32-9fe1-4d1d-8700-da62e0af4269" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/563d1b32-9fe1-4d1d-8700-da62e0af4269" />
 
-<img width="800" height="992" alt="image" src="https://github.com/user-attachments/assets/8610a3de-a65d-442a-9659-1de9db2df95e" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/8610a3de-a65d-442a-9659-1de9db2df95e" />
 
-<img width="800" height="1238" alt="image" src="https://github.com/user-attachments/assets/8143240c-db8a-49fd-8749-d632e13bb7c1" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/8143240c-db8a-49fd-8749-d632e13bb7c1" />
 
-<img width="800" height="993" alt="image" src="https://github.com/user-attachments/assets/ca454f12-b0e7-4cf4-86c3-674b798adfe9" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/ca454f12-b0e7-4cf4-86c3-674b798adfe9" />
 
 ---
 
@@ -224,7 +224,7 @@ Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwri
 - [Ultimate DevOps Project with Resume Preparation](https://tcsglobal.udemy.com/course/ultimate-devops-project-with-resume-preparation/learn/lecture/48207855?start=15#overview)
 - GitHub: [ultimate-devops-project-demo](https://github.com/iam-veeramalla/ultimate-devops-project-demo)
 - GitHub: [ultimate-devops-project-aws](https://github.com/iam-veeramalla/ultimate-devops-project-aws)
-<img width="800" height="1200" alt="image" src="https://github.com/user-attachments/assets/767f87ca-19b7-43c6-82bb-0051c3c148e5" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/767f87ca-19b7-43c6-82bb-0051c3c148e5" />
 
 
 - https://github.com/kunalshrivastavapune25/aws-eks-kubernetes-masterclass/tree/master/11-NEW-DevOps-with-AWS-Developer-Tools-and-GitHub
@@ -461,9 +461,9 @@ Notes
 
 **What is a Deployment Strategy?**
 A deployment strategy is essential for managing application updates in Kubernetes. Many users mistakenly think they can simply uninstall an old version and install a new one, which can lead to significant downtime. This is particularly detrimental for organizations like Amazon or Instagram, where even a few minutes of downtime can result in revenue loss and a poor user experience.
-<img width="800" height="533" alt="image" src="https://github.com/user-attachments/assets/b29df26d-4b45-4aa2-beda-14778b0fd7c4" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/b29df26d-4b45-4aa2-beda-14778b0fd7c4" />
 
-<img width="800" height="1200" alt="image" src="https://github.com/user-attachments/assets/5d510117-9bff-4746-aab7-13b5d362645f" />
+<img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/5d510117-9bff-4746-aab7-13b5d362645f" />
 
 ---
 
