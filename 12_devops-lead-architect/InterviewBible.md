@@ -226,7 +226,7 @@ Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwri
 - GitHub: [ultimate-devops-project-aws](https://github.com/iam-veeramalla/ultimate-devops-project-aws)
 <img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/767f87ca-19b7-43c6-82bb-0051c3c148e5" />
 
-
+- https://opentelemetry.io/docs/demo/architecture/
 - https://github.com/kunalshrivastavapune25/aws-eks-kubernetes-masterclass/tree/master/11-NEW-DevOps-with-AWS-Developer-Tools-and-GitHub
 ---
 
@@ -236,6 +236,9 @@ Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwri
 - Blog: [DevSecOps Mastery – Deploy Tetris on EKS with Jenkins & ArgoCD](https://blog.stackademic.com/devsecops-mastery-a-step-by-step-guide-to-deploying-tetris-on-aws-eks-with-jenkins-and-argocd-3adcf21b3120)
 - developer makes dockerfile using docker build command , then we test it by making container of same by docker deploy and in jenkins pipeline we have have docker buuild code that makes the image deploys and 
 - test it then it going to push same to ecr then we update that image to deployment.yml, inside manifest folder then argocd will sync same to prod env, this image is also goes though sonarqube, owasp and trivy
+- <img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/4cd3ff32-e28f-421e-8358-55f59431c3dd" />
+
+
 ---
 
 ## 12. SonarQube – 70% Passing
@@ -248,9 +251,10 @@ Aim to achieve at least 70% quality gate passing in SonarQube scans.
 
 Placeholder for notes on AWS RBAC, IAM, and AWS Control Tower , landing zone and organisations, cross account access and shared accounts,
 additionally study about k8s rbac, role, role binding , users, service account 
+https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 
 ---
-## 13 EKS Disaster Recovery (DR) – Comprehensive Interview Guide
+## 13 EKS Disaster Recovery (DR) and Upgrade – Comprehensive Interview Guide
 
 - GitHub: https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/03_IAC/dr%20and%20upgrade.md
 
@@ -628,7 +632,8 @@ In summary, using a deployment strategy in Kubernetes is essential for minimizin
 ---
 
 ## 19. Karpenter and ArgoCD
-
+- https://aws.amazon.com/blogs/big-data/use-karpenter-to-speed-up-amazon-emr-on-eks-autoscaling/
+- https://blog.searce.com/argocd-gitops-continuous-delivery-approach-on-google-kubernetes-engine-2a6b3f6813c0
 #### Table of contents
 - What they are (at a glance)
 - Prerequisites
