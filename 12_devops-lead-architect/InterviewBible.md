@@ -228,6 +228,8 @@ Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwri
 
 - https://opentelemetry.io/docs/demo/architecture/
 - https://github.com/kunalshrivastavapune25/aws-eks-kubernetes-masterclass/tree/master/11-NEW-DevOps-with-AWS-Developer-Tools-and-GitHub
+- <img width="480" height="720" alt="image" src="https://github.com/user-attachments/assets/e5be2994-ed0a-480b-92ad-8be7fa7647de" />
+
 ---
 
 ## 11. Aman Pathak Tetris Project
