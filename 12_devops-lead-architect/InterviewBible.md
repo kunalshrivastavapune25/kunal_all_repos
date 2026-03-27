@@ -174,6 +174,13 @@ Minimize direct cluster changes → maximize **traceability, auditability & secu
 ## 6. Pod Troubleshooting
 
 - Udemy lecture: [Troubleshooting Pods](https://tcsglobal.udemy.com/course/ultimate-devops-and-cloud-interview-guide/learn/lecture/50809923#overview)
+- https://www.youtube.com/watch?v=vGab4v3RWEw&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=1
+- https://www.youtube.com/watch?v=aEPIlQBWBGQ&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=2
+- https://www.youtube.com/watch?v=O61HDmGUBJM&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=3
+- https://www.youtube.com/watch?v=VytIsTdmgr4&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=4
+- https://www.youtube.com/watch?v=uBhjymTV0ro&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=5
+- https://www.youtube.com/watch?v=qvBHvD4oXMc&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=6
+
 
 ---
 
