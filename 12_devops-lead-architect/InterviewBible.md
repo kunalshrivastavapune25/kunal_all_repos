@@ -181,7 +181,7 @@ Minimize direct cluster changes → maximize **traceability, auditability & secu
 - https://www.youtube.com/watch?v=uBhjymTV0ro&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=5
 - https://www.youtube.com/watch?v=qvBHvD4oXMc&list=PLdpzxOOAlwvIrFBI1farpLS_OSUBXJMLX&index=6
 
-
+- https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/08_containerization/k8stroubleshooting.md
 ---
 
 ## 7. Handwritten Notes
