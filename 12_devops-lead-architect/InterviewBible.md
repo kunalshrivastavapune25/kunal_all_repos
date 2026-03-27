@@ -205,7 +205,7 @@ Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwri
 
 ---
 
-## 8. Kubernetes App – Useful Links
+## 8. Kubernetes Useful Links
 
 - [Ahmed Ali Butt LinkedIn](https://www.linkedin.com/in/ahmedalibutt/)
 - [LinkedIn Post – Kubernetes App](https://www.linkedin.com/feed/update/urn:li:activity:7433489248076374016/)
@@ -247,13 +247,7 @@ Location: `C:\kunal\LINKEDIN IMAGES\` (or local path) – scan/photos of handwri
 
 Aim to achieve at least 70% quality gate passing in SonarQube scans.
 
----
 
-## 13. RBAC / Control Tower
-
-Placeholder for notes on AWS RBAC, IAM, and AWS Control Tower , landing zone and organisations, cross account access and shared accounts,
-additionally study about k8s rbac, role, role binding , users, service account 
-https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 
 ---
 ## 13 EKS Disaster Recovery (DR) and Upgrade – Comprehensive Interview Guide
@@ -269,7 +263,11 @@ https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-le
 
 ---
 
-## 15. rbac  control tower landing zone organization role binding service account
+## 15. Rbac  Control tower Landing zone
+- organization role binding service account
+notes on AWS RBAC, IAM, and AWS Control Tower , landing zone and organisations, cross account access and shared accounts,
+additionally study about k8s rbac, role, role binding , users, service account 
+- https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 
  - https://www.youtube.com/watch?v=ECTxTONWgw8&t=466s
 
@@ -422,7 +420,7 @@ This chapter covered managing access to Kubernetes resources using RBAC, includi
 
 ---
 
-## 16. cost reduction in cloud
+## 16. Cost in Cloud
 ### Compute
 - Rightsize with AWS Compute Optimizer; switch to Graviton3 where suitable.
 - Savings Plans (Compute) and Reserved Instances for steady workloads.
@@ -463,7 +461,7 @@ Notes
 
 ---
 
-## 17. blue green and canary deployment in eks
+## 17. Blue Green and Canary Deployment in EKS
 
 **What is a Deployment Strategy?**
 A deployment strategy is essential for managing application updates in Kubernetes. Many users mistakenly think they can simply uninstall an old version and install a new one, which can lead to significant downtime. This is particularly detrimental for organizations like Amazon or Instagram, where even a few minutes of downtime can result in revenue loss and a poor user experience.
@@ -1060,46 +1058,26 @@ For more AWS tutorials, please subscribe to our channel at [youtube.com/knowledg
 
  - https://github.com/kunalshrivastavapune25/kunal_all_repos/blob/main/12_devops-lead-architect/readme.md
 Interview Scenario
-
-Production API latency suddenly increased.
-
-Incident Response Steps
-
-1️⃣ Identify impact
-
-Which service affected?
-
-2️⃣ Check monitoring
-
-CloudWatch
-
-Prometheus
-
-3️⃣ Check infrastructure
-
-Load balancer health
-
-Auto scaling
-
-4️⃣ Check database
-
-Slow queries
-
-CPU spikes
-
-5️⃣ Check recent deployments
-
-Rollback if needed
-
-6️⃣ Mitigation
-
-Scale infrastructure
-
-7️⃣ Postmortem
-
-Root cause analysis
-
-Prevention plan
+- Production API latency suddenly increased.
+- Incident Response Steps
+- 1️⃣ Identify impact
+- Which service affected?
+- 2️⃣ Check monitoring
+- CloudWatch
+- Prometheus
+- 3️⃣ Check infrastructure
+- Load balancer health
+- Auto scaling
+- 4️⃣ Check database
+- Slow queries
+- CPU spikes
+- 5️⃣ Check recent deployments
+- Rollback if needed
+- 6️⃣ Mitigation
+- Scale infrastructure
+- 7️⃣ Postmortem
+- Root cause analysis
+- Prevention plan
 ---
 
 ## 30. How to Create a Helm Chart
@@ -1149,8 +1127,6 @@ Prevention plan
 - Verify resources in each environment using `kubectl get all -n dev` for development and `kubectl get all -n prod` for production.
 - Access the web application to check custom headers for both environments, confirming functionality.
 ---
-
-## 31. AWS Organization , control towers landing zones
 
 ## 32. Migration
 
