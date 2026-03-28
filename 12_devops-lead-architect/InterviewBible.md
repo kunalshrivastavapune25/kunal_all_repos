@@ -44,16 +44,12 @@ This repository contains my personal notes, talking points, and resources for pr
 ---
 
 ## 1. Introduction / About Myself
-
-- Currently working at **Netcracker** on a large-scale **multi-microservice architecture**  
+```- Currently working at **Netcracker** on a large-scale **multi-microservice architecture**  
   → Key domains: Billing, Customers, GSM, Locations, Accounts, Provisioning, etc.
-
 - Multiple dedicated **development** and **DevOps** teams per microservice domain
-
 - My current role:  
   - **Dev Lead** for migration from legacy monolith → modern microservices target architecture  
   - Active member of **DevOps team** responsible for **Products**, **Customers**, **Accounts**, and related microservices
-
 - Core responsibilities:  
   - Implementing and improving **DevOps practices & processes**  
   - **Containerization** (Docker)  
@@ -62,6 +58,7 @@ This repository contains my personal notes, talking points, and resources for pr
   - **Infrastructure as Code** (Terraform, Ansible)
 - Day to day work:
   - MLOPS -- Build Training data, obsevablity, cicd, madel registry, iac, cost 
+```
 ---
 
 ## 2. Best Practices & Daily / Weekly Work
