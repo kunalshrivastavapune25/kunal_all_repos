@@ -1133,5 +1133,6 @@ Interview Scenario
 By the end of this tutorial, you will have the skills to effectively customize and deploy Kubernetes applications using Helm, making it a valuable resource for job seekers and personal projects. For further learning, check the video description for additional resources and links to related content. Thank you for watching!
 
 ---
-
+- https://github.com/kunalshrivastavapune25/aws/blob/main/aws_devops_chectsheets.md
+- https://github.com/kunalshrivastavapune25/aws/blob/main/AWS-SAA-Master-Cheat-Sheet%20(1).pdf
 > **Note:** This README is a compilation of personal study notes, interview preparation points, and resource links. Content is preserved as originally written, with minor reorganization for clarity.
